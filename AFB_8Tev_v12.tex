@@ -1,0 +1,1794 @@
+\documentclass{cmspaperpdf}
+\usepackage{amsmath}
+\usepackage{graphics, amssymb}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{appendix}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{hyperref}
+
+
+%\usepackage{rotating}
+\begin{document}
+
+% Alter some LaTeX defaults for better treatment of figures:
+    % See p.105 of "TeX Unbound" for suggested values.
+    % See pp. 199-200 of Lamport's "LaTeX" book for details.
+    %   General parameters, for ALL pages:
+    \renewcommand{\topfraction}{0.95}	% max fraction of floats at top
+    \renewcommand{\bottomfraction}{0.95}	% max fraction of floats at bottom
+    %   Parameters for TEXT pages (not float pages):
+    \setcounter{topnumber}{3}
+    \setcounter{bottomnumber}{3}
+    \setcounter{totalnumber}{4}     % 2 may work better
+    \setcounter{dbltopnumber}{2}    % for 2-column pages
+    \renewcommand{\dbltopfraction}{0.9}	% fit big float above 2-col. text
+    \renewcommand{\textfraction}{0.07}	% allow minimal text w. figs
+    %   Parameters for FLOAT pages (not text pages):
+    \renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
+	% N.B.: floatpagefraction MUST be less than topfraction !!
+    \renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
+%==============================================================================
+% title page for few authors
+
+% define the b-tag parts of the chi2, show prob dists of discriminator for b- and light flavor
+% show ttbar and background chi2 distributions
+% try fit without chi2 info
+
+% Fits: show charge, njets, and chi2 info 
+
+\begin{titlepage}
+
+% select one of the following and type in the proper number:
+  % \cmsnote{2014/000}
+  \internalnote{2017/000}
+%  \conferencereport{2005/000}
+  \date{\today}
+
+  \title{Measuring the $t\bar{t}$ forward-backward asymmetry using semi-leptonic final states at 8 TeV with the CMS detector }
+
+  \begin{Authlist}
+    N.~Eminizer, L.~Feng, M.~Swartz
+       \Instfoot{jhu}{Department of Physics and Astronomy, Johns Hopkins University}
+  \end{Authlist}
+
+% if needed, use the following:
+%\collaboration{CMS collaboration}
+
+  \begin{abstract}
+This note presents a measurement of Forward-Backward Asymmetry($\displaystyle{A_{FB}}$) in $t\bar{t}$ production. The data sample corresponds to $19.7\,\textrm{fb}^{-1}$ of integrated luminosity in proton-proton collisions at $\sqrt{s} = 8\,\textrm{TeV}$ collected by the CMS experiment at the LHC. Events selected contain a single isolated muon or electron, with four or five jets of which two are b-tagged. A template technique is used to extract the asymmetry from the top quark kinematic distributions. This technique is based upon an extension of the tree-level cross section for $q\bar{q}$ initial states that sensitively isolates $q\bar{q}$ from $gg/qg$ initial states. The measured $A_{FB}$ and relative aboundance of $q\bar{q}$ initiated $t\bar{t}$ are measured and compared to both theoretical calculation and results from D0 and CDF experiments of Tevatron.
+  \end{abstract} 
+
+% if needed, use the following:
+%\conference{Presented at {\it Physics Rumours}, Coconut Island, April 1, 2005}
+%\submitted{Submitted to {\it Physics Rumours}}
+\note{Preliminary version}
+  
+\end{titlepage}
+
+\clearpage
+
+Version finished on 11-15-2017. Changes vs v1:
+
+
+\begin{itemize}
+\item Change the value of gluon longitudinal polarization ($\alpha$) from the values of Powheg sample fit to the values of aMC@NLO sample fit. See Fig.[\ref{fig:alpha_fit}]
+\item Update the fit results and systematic using new templates with new $\beta$ dependent values of $\alpha$[\ref{sec:results}]. The change from previous version is very small.
+\item Add more template shape plots in Appendix.[\ref{sec:all templates}]
+\item More editing done. 
+\end{itemize}
+
+\clearpage
+
+\tableofcontents
+
+\setcounter{page}{2}%JPP
+
+\clearpage
+
+\section{Introduction}
+
+For some years, there has been the persistent observation that the forward-backward asymmetry in hadronic $t\bar t$ production, $A_\mathrm{FB}$, measured at the Tevatron \cite{cdf,d0} may be significantly larger than that expected from NLO QCD effects \cite{Kuhn:1998kw, Kuhn:2011ri, AguilarSaavedra:2012rx} although the most recent D0 results \cite{Abazov:2014cca} are consistent with MSM expectations.
+
+Measuring the top quark forward-backward asymmetry at the LHC is considerably more challenging than at the Tevatron.  The $t\bar t$ cross section at the Tevatron is dominated by the $q\bar q$ production process and the incident quark and anti-quark directions are reasonably well defined by the proton and antiproton beams.  At the LHC, the production process is dominantly $gg$ and the the quark content of the initial state is symmetric.  Since there can be no asymmetry from the $gg$ initial state, these two effects significantly complicate the extraction of the asymmetry in $q\bar q\to t\bar t$.  Measurements \cite{ATLAS_measurement,CMS_measurement,Chatrchyan:2014yta} done to date have focused on the determination of the so called charge asymmetry $A_C$ that is based upon the number of positively and negatively charged leptons observed in top pair events at large lepton rapidity. This quantity is diluted by $gg$ and $qg$ initial states and uses only a fraction of the available information. 
+
+All of the measurements done to date have been ``empirical'' in the sense that the measured quantity does not depend upon a model of the $t\bar t$ production mechanism although the interpretation of the measurements is model dependent.  This work represents a different approach.  A simplified model for the production mechanism is adopted.  This allows the use of a likelihood analysis to isolate the $q\bar q$ subprocess from the $gg$  and $qg$ subprocesses and from other backgrounds.  The adopted model is a leading order description of several possible Beyond the Standard Model (BSM) processes and is a reasonable approximation of the expected Next-to-Leading-Order (NLO) QCD effects.
+
+The likelihood approach is based upon the observation that the angular distributions resulting from the s-channel dominated $q\bar q$ subprocess and from the t-channel dominated $gg$ subprocess are quite distinct.  Additionally, the gluon structure functions are ``softer'', more peaked a low x, than are the quark structure functions.  Therefore, highly boosted $t\bar t$ pairs, those produced at large $x_\mathrm{F}$ or rapidity, are more likely to be $q\bar q$-produced and the boost direction is most likely to be the direction of the incident quark.  To define the variables, we let $x_1$ and $x_2$ be the momentum fractions of the incident partons ordered so that the net boost is positive, $x_\mathrm{F}=x_1-x_2>0$.  The invariant mass of the $t\bar t$ pair, $M$, is then related to the momentum fractions, $M^2 = x_1x_2s$, where $s$ is the square of the pp center-of-mass energy. The differential cross section for $t\bar t$ production is composed of three parts,
+\begin{align}
+\frac{d^3\sigma}{dx_\mathrm{F}dMdc_*} =&\frac{2M}{s\sqrt{x_\mathrm{F}^2+4M^2/s}}\biggl\lbrace\frac{d\sigma}{dc_*}(q\bar q;M^2)\left[D_q(x_1)D_{\bar q}(x_2)+D_q(x_2)D_{\bar q}(x_1)\right] \nonumber \\ &+ \frac{d\sigma}{dc_*}(gg;M^2)D_g(x_1)D_g(x_2)\biggr\rbrace + \frac{d^3\sigma}{dx_\mathrm{F}dMdc_*}(\mathrm{background})
+\label{eq:totxsdef}
+\end{align}
+where $x_{1,2}=\pm x_\mathrm{F}+ \sqrt{x_\mathrm{F}^2+4M^2/s}$, $c_*\equiv\cos{\theta^*}$ and $\theta^*$ is angle between the initial state quark direction and the top direction in the $t\bar t$ cm frame , and where the tree-level cross sections for $q\bar q,\ gg \to t\bar t$ are
+\begin{equation}
+\frac{d\sigma}{dc_*}(q\bar q;M^2) = \frac{\pi\alpha_s^2}{9M^2}\beta\left[1+\beta^2c_*^2+\left(1-\beta^2\right)\right]
+\label{eq:qqzerodef}
+\end{equation}
+and
+\begin{equation}
+\frac{d\sigma}{dc_*}(gg;M^2) = \frac{\pi\alpha_s^2}{48M^2}\beta\left[\frac{16}{1-\beta^2c_*^2}-9\right]\left\lbrace\frac{1+\beta^2c_*^2}{2}+(1-\beta^2)-\frac{(1-\beta^2)^2}{1-\beta^2c_*^2}\right\rbrace
+\label{eq:ggdef}
+\end{equation}
+and where the top quark velocity in the cm-frame is $\beta=\sqrt{1-4m_t^2/M^2}$.  The $gg$ subprocess produces a more forward-peaked cross section which provides the primary discriminant in the separation of the $gg$ and $qq$ subprocesses.
+
+This study will consider events that can have extra jets which implies that the $t\bar t$ pairs can have non-zero transverse momenta .  This is accommodated in NLO descriptions by using the Collins-Soper (CS) definition \cite{Collins:1977iv} of the production angle and by allowing the cross section to develop a (CS frame dependent) term corresponding to longitudinal gluon polarization,
+\begin{equation}
+\frac{d\sigma}{dc_*}(q\bar q;M^2) = K\frac{\pi\alpha_s^2}{9M^2}\beta\left[1+\beta^2c_*^2+\left(1-\beta^2\right)+\alpha\left(1-\beta^2c_*^2\right)\right]
+\label{eq:qqnlodef}
+\end{equation}
+where $K$ is a normalization parameter and the average longitudinal polarization $\alpha$ is determined from a fit to a sample of generated events.
+
+An asymmetric $q\bar q$ subprocess could be caused by several kinds of new physics that interfere with or augment the tree-level process   \cite{Cao:2010zb, Gresham:2011pa}.  Most of these can be characterized in leading order by a small generalization of the tree-level cross section,
+\begin{align}
+\frac{d\sigma}{dc_*}(q\bar q;M^2) = R\frac{\pi\alpha_s^2}{9M^2}\beta\biggl\lbrace&1+\beta^2c_*^2+\left(1-\beta^2\right)+\alpha \left(1-\beta^2c_*^2\right) \nonumber \\
+&+2\left[1+\frac{1}{3}\beta^2+(1-\beta^2)+\alpha\left(1-\frac{1}{3}\beta^2\right)\right]A_\mathrm{FB}^{(1)}c_*\biggr\rbrace
+\label{eq:qqonedef}
+\end{align}
+Note that the asymmetry is characterized by the slope of the linear term in $c_*$ and is labelled with the superscript $(1)$.  Next-to-leading-order QCD corrections are expected  \cite{Kuhn:1998kw} to produce an asymmetry of approximately 8\%.  A comparison of the ratio of the $c_*$-odd and even terms for the full NLO calculation and for the simple linear model given in equation~\ref{eq:qqonedef} with $A_\mathrm{FB}^{(1)} = 0.08$ is shown in Fig.~\ref{fig:qcd_comp}.  The black curves show the NLO calculation for three different values of $M$.  The red curves show the linear model for the same values of $M$.  It is clear that the linear model is fairly accurate at lower masses and is still a reasonable approximation at larger masses.  A test of this hypothesis was performed by fitting the full NLO angular distribution generated by Powheg to the form given in equation~\ref{eq:qqonedef} and by comparing the resulting linearized asymmetry with the asymmetry determined from counting the forward and backward top events.  The results are listed in Table~\ref{tab:afb_counting_fitting} for the full sample and for the 4-jet and 5-jet subsamples.  Excellent agreement is observed.
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.5\linewidth]{other/QCD_comp.pdf}
+  \caption{\small The ratio of the $c_*$-odd and even terms for the full NLO calculation and for the simple linear model given in equation~\ref{eq:qqonedef} with $A_\mathrm{FB}^{(1)} = 0.08$.  The black curves show the NLO calculation for three different values of $M$: 400~GeV (solid), 600~GeV (dashes), and 1000~GeV (dots).  The black dash-dot curve corresponds to $b$ quarks and should be ignored.  The red curves show the linear model with $A_\mathrm{FB}^{(1)} = 0.08$ for the same masses.}
+    \label{fig:qcd_comp}
+  \end{center}
+\end{figure}
+
+\begin{table}[hbt]
+\begin{center}
+\caption{\small \label{tab:afb_counting_fitting} The $q\bar q\to t\bar t$ forward-backward asymmetry as determined from a sample of Powheg NLO generated events by counting and by fitting to the linearized function.}
+\vspace{3pt}
+\begin{tabular}{|l|cc|}\hline
+ Sample      & $A_{FB}$ (counting) & $A_{FB}^{(1)}$ (fitting) \\ \hline
+All events   & $+0.0356\pm0.0015$  & $+0.0352\pm0.0013$       \\ 
+4 jets only  & $+0.0903\pm0.0018$  & $+0.0900\pm0.0016$       \\ 
+5 jets only  & $-0.0698\pm0.0026$  & $-0.0720\pm0.0023$       \\ 
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+The distributions in ($M$, $c_*$, $x_F$) for the $gg$ and $q\bar q$ initial states can be visualized by considering a sample of $t\bar t(j)$ events generated with Powheg for $pp$ collisions at $\sqrt{s}=8$~TeV.  Because an extra jet is allowed, there is also a substantial contribution from the process $qg\to t\bar t q$ which is larger in magnitude than the $q\bar q$ subprocess.  The mass, $\cos\theta^*$, and $x_F$ distributions for the three subprocesses are shown in Fig.~\ref{fig:distributions}.  Note that the $gg$ and $qg$ distributions are quite similar.  Because the asymmetry for $qg$ events is expected to be smaller than for $q\bar q$ events events \cite{Kuhn:1998kw} (see also Table~\ref{tab:alpha_tune}), the $gg$ and $qg$ subprocesses are combined into a single distribution function for the purpose of this work.  The $q\bar q$ mass distribution is somewhat narrower than the others.  The $q\bar q$ angular distribution is much flatter than the others due to t-channel pole that dominates the $gg$ and $qg$ cross sections.  Of key importance, the $x_F$ distribution of the $q\bar q$ events has a longer tail that helps to discriminate them and to correctly identify the incident quark direction.  The result of taking the longitudinal direction of the $t\bar t$ pair in the lab frame as the quark direction is shown in Fig.~\ref{fig:distributions}(d).  Defining $N_C$ as the number of correct assignments and $N_I$ as the number of incorrect assignments, the dilution factor $D=(N_C-N_I)/(N_C+N_I)$ is plotted vs $x_F$.  Note that it becomes large in the $q\bar q$ enriched region at large $x_F$.
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=\linewidth]{other/distributions_powheg.pdf}
+  \caption{\small The mass (a), $\cos\theta^*$ (b), and $|x_F|$ (c) distributions for the subprocesses $gg/qg/q\bar q\to t\bar t(j)$.  The result of taking the longitudinal direction of the $t\bar t$ pair in the lab frame as the quark direction is shown in panel (d).  Defining $N_C$ as the number of correct assignments and $N_I$ as the number of incorrect assignments, the dilution factor $D=(N_C-N_I)/(N_C+N_I)$ is plotted vs $x_F$.  Note that it becomes large in the $q\bar q$ enriched region at large $|x_F|$.}
+    \label{fig:distributions}
+  \end{center}
+\end{figure}
+
+Because there can be ``feed-down'' from QCD processes that produce $t\bar t$ with more than one extra jet, we define the $gg$ label to include events produced from the $gg$, $qg$, $qq$, $\bar q \bar q$, and $q_i\bar q_j\ (\mathrm{flavor}\ i\neq \mathrm{flavor}\ j)$ subprocesses.
+
+\clearpage
+\section{Analysis Scheme}
+\label{sec:analysis scheme}
+It is possible to reconstruct the three key variables $x_\mathrm{r}$, $M_\mathrm{r}$, and $c_\mathrm{r}$ from lepton and 4(5)-jet final states.  The sign of the lepton tags the top vs antitop direction.  The direction of the pair along the beam axis can be taken as the likely quark direction for $q\bar q$.  Integrating over the pair pt (necessary only for the 5-jet cases), the data can be represented as a set of triplets in the reconstructed variables.  The distribution function of the reconstructed variables can be expressed as a convolution of the cross section defined in equation~\ref{eq:totxsdef} (with the $q\bar q$ cross section given by equation~\ref{eq:qqonedef}),
+
+\begin{equation}
+f(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r}) = C \int dx_\mathrm{F}dMdc_* R(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r}; x_\mathrm{F}, M, c_*)\varepsilon (x_\mathrm{F}, M, c_*) \frac{d^3\sigma}{dx_\mathrm{F}dM dc_*} 
+\end{equation}
+
+where $C$ is a normalization constant, $R$ is a ``resolution function'' that incorporates real detector resolution and parton shower effects, and $\varepsilon$ is an efficiency function.  The key point is that the linearity of the $c_*$-odd term in equation~\ref{eq:qqonedef} is not disturbed by the convolution and the linear coefficient $A_{FB}^{(1)}$ is unaffected.  The linearity of the problem also allows the fitting function to be represented by a set of nine {\bf parameter-independent} 3D histograms or templates.  These histograms can be constructed by appropriate weighting and re-weighting of a large sample fully digitized and reconstructed events from a simulation.  The $gg(qg)\to t\bar t(X)$ and background distributions $f_{gg}(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r})$ and $f^j_\mathrm{bk}(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r})$ can be extracted directly from fully simulated samples by binning in the reconstructed variables.  The various parts of the $q\bar q$ distribution can be constructed by re-weighting simulated data using generator-level variables to generate the weights and binning in reconstructed variables. 
+
+To illustrate the re-weighting procedure, let's assume that we have a sample of fully simulated and reconstructed $q\bar q \to t\bar t$ events.  For simplicity, let's assume that $\xi,\delta=0$ in equation \ref{eq:qqonedef}.  If the simulation is tree-level, it generates the symmetric cross section \footnote{Due to the symmetrized weighting described below, NLO simulations generating asymmetric distributions can also be used.} given in equation~\ref{eq:qqnlodef} and we can create one 3D histogram or template simply by binning the events in the reconstructed variables.  We call this symmetric distribution $f_\mathrm{qs}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r}, Q)$ and normalize it by the total number of events.  We can generate the asymmetric distribution by applying the following weight to each simulated event using generator-level quantities,
+
+\begin{equation}
+w_\mathrm{a}(M^2, c_*) = 2\frac{1+\frac{1}{3}\beta^2+(1-\beta^2)+\alpha(1-\frac{1}{3}\beta^2)}{1+\beta^2c_*^2+\left(1-\beta^2\right)+\alpha\left(1-\beta^2c_*^2\right)}c_*
+\end{equation}
+
+and then binning the weighted events in the reconstructed quantities to produce the asymmetric distribution $f_\mathrm{qa}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r}, Q)$ with the same normalization as used for the symmetric distribution.  A simple three parameter likelihood fit to the real data would follow from the following four histograms,
+
+\begin{align}
+f(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r}) =& \sum_jR^j_\mathrm{bk}f^j_\mathrm{bk}(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r})+\biggl(1-\sum_jR^j_\mathrm{bk}\biggr )\biggl\lbrace \left(1-R_{q\bar q}\right) f_{gg}(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r})\nonumber \\ &+R_{q\bar q}\left[f_\mathrm{qs}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r})+A_\mathrm{FB}^{(1)}f_\mathrm{qa}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r})\right]\biggr\rbrace
+\label{eq:template_schemeone}
+\end{align}
+
+where the background fractions $R^j_\mathrm{bk}$, $q\bar q$ fraction $R_{q\bar q}$, and asymmetry $A_\mathrm{FB}^{(1)}$ are allowed to float.  Note that the backgrounds can be summed into a single distribution and represented by a single parameter or they can be subdivided into several parts represented by several fraction parameters.  This analysis should be done in bins or slices of $M_\mathrm{r}$ so that it is really a series of 3-parameter fits and extracts $A_\mathrm{FB}^{(1)}(M)$.  Due  to the limited statistics available in the 2012 data, mass binning of the parameters has not yet been implemented.  Note that this technique automatically accounts for resolution, dilution, migration, and acceptance effects so long as they are correctly modeled in the simulation.
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.7\linewidth]{other/frames.pdf}
+  \caption{\small The $t\bar t$ center-of-mass frame where system is presumed to be boosted in the direction of the proton with momentum vector $\vec p_1$ which determines the positive direction using the Collins-Soper definition of the production angle.}
+    \label{fig:frames}
+  \end{center}
+\end{figure}
+
+The acceptance for the moving $t\bar t$ pairs has a small subtlety that can be exploited to help distinguish the signal from the backgrounds.  The $t\bar t$ center-of-mass frame is shown in Fig.~\ref{fig:frames}.  The system is presumed to be boosted in the direction of the proton with momentum vector $\vec p_1$ and it determines the positive direction using the Collins-Soper definition of the production angle.  It is possible that the leptonically decaying $t$ or $\bar t$ is produced in the ``forward'' direction as shown on the left-hand side of the figure.  If the leptonic top decays to a positively (negatively) charged lepton, the sign of $c_*$ and $c_r$ are positive (negative).  Assuming that the detector locally accepts and reconstructs positive and negative charges with the same efficiency and resolution, the acceptance and resolution for the two cases are the same.  Similarly, the leptonically decaying $t$ or $\bar t$ can be produced in the ``backward'' direction as shown on the right-hand side of the figure.  Again, the sign of the lepton determines two cases that have the same efficiency and resolution.  However, the efficiency and resolution for the left and right cases are not in general the same.  A non-zero value of $A_\mathrm{FB}^{(1)}$ when combined with the acceptance difference would produce an asymmetry in the number of positively and negatively charged leptons observed in the sample.  The approach described above merges the two $c>0$ and the two $c<0$ cases to create truly symmetric and antisymmetric functions and cannot describe this effect.  It is, however, possible to split the problem by lepton charge instead.  This modifies equation~\ref{eq:template_schemeone} as follows,
+\begin{align}
+f(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r},Q) =&  \sum_jR^j_\mathrm{bk}f^j_\mathrm{bk}(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r})+\biggl(1-\sum_jR^j_\mathrm{bk}\biggr )\biggl\lbrace \left(1-R_{q\bar q}\right) f_{gg}(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r},Q)\nonumber \\ &+R_{q\bar q}\left[f_\mathrm{qs}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q)+A_\mathrm{FB}^{(1)}f_\mathrm{qa}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q)\right]\biggr\rbrace
+\label{eq:template_schemetwo}
+\end{align}
+where the functions are built using the lepton charge $Q$ information.  Because we desire to symmetrize and anti-symmetrize the $q\bar q$ fitting functions, the CP symmetries shown in Fig.~\ref{fig:frames} can be exploited to use each simulated event twice.  For each simulated event with lepton charge $Q$, generated angle $c_*$, and reconstructed angle $c_r$, the distribution functions for the coordinate $(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r},Q)$ and $(x_\mathrm{r},M_\mathrm{r},-c_\mathrm{r},-Q)$ can be accumulated where the weights for the latter point assume a generated angle of $-c_*$.    The new distributions functions don't have definite symmetry until they are combined over lepton charge $Q$.  Due to the double-weighting, {\bf the charge-summed distribution functions have definite symmetry (or antisymmetry) even if the original unweighted simulation was not $\mathbf{c_*}$-symmetric.}  The function $f_{gg}$ describes the distribution of $gg$ and $qg$ events.  The $gg$ events are used symmetrically with 0.5 event accumulated in each of the $(c_\mathrm{r},Q)/(-c_\mathrm{r},-Q)$ bin pairs.  The $qg$ events are not symmetrized so that the final distribution function reflects their expected FB asymmetry.  The advantage of this formulation is that it can describe a charge asymmetry arising from the combination of a non-zero $A_\mathrm{FB}^{(1)}$ and an asymmetric acceptance.  More importantly, it accommodates the charge-asymmetric background which has significant contributions from $W$+jet events and single top events.  The accepted charge ratios of fully simulated and reconstructed semi-muonic top pair candidates from various signal and background processes are listed in Table~\ref{tab:njets}.  It is clear that including charge information increases the background discrimination power of the fitting procedure.
+
+\begin{table}[hbt]
+\begin{center}
+\caption{\small \label{tab:njets} The sample fractions and lepton charge ratios for various signal and background processes from samples of fully simulated and reconstructed Powheg and MadGraph5 semi-muonic events.  The samples and selection criteria are described in Sections~\ref{sec:samples}-\ref{sec:selection}.}
+\vspace{3pt}
+\begin{tabular}{|lccc|}\hline
+Process                                                     & Generator & Sample Fraction & $N(\mu^+)/N(\mu^-)$ \\ \hline
+$q\bar q\to t\bar t(\mathrm{j})\to\mu+4(5)\mathrm{j}$       & Powheg    & 0.062           & 1.000$\pm$0.014                 \\ 
+$gg(qg)\to t\bar t(\mathrm{j})\to\mu+4(5)\mathrm{j}$        & Powheg    & 0.731           & 0.998$\pm$0.004                 \\ 
+$pp\to t\bar t(\mathrm{j})\to \mathrm{hadronic/dileptonic}$ & Powheg    & 0.106           & 1.018$\pm$0.011               \\
+$W+\mathrm{jets}$                                           & Madgraph5 & 0.037           & 1.408$\pm$0.026                               \\ 
+single top                                                  & Powheg    & 0.056           & 1.260$\pm$0.019                                         \\
+$Z/\gamma+\mathrm{jets}$                                    & MadGraph5 & 0.009           & 1.045$\pm$0.039                       \\ \hline
+
+\end{tabular}
+\end{center}
+\end{table}
+
+\clearpage
+\section{Event Samples}
+\label{sec:samples}
+
+\subsection{Software}
+The reconstruction and the analysis of the data used in this study can be divided into three stages.  The first stage involves the selection and storage of lepton and jet particle flow objects from AOD to B2G PATuples.  Simulated events also include generator level information.  This stage is done by B2G group using CMSSW 5.3.X release and TLBSM 53x version 3 code \cite{B2G_twiki}.  In the second stage, lepton ID tags, b-tagging discriminant information, and PDF weights (simulation only) are added.  The  CMSSW 5.3.24-based JHU Ntuplizer, developed for several B2G analyses, is used to generate EDM Ntuples.  In the third stage, the final event selection, top quark reconstruction, and template fit are performed. The third stage is independent of CMSSW although the CMSSW 7.2.0 environment is used to access ROOT version 5.34.18cms12. The template fit is performed using Theta package \cite{muller2010theta}.
+  
+\subsection{Data}
+The full 2012 LHC run dataset recorded by CMS detector, listed in Table~\ref{tab:datasets}, is used.  It represents proton proton collision at center of mass energy of 8 TeV with integrated luminosity of $19.7 \pm 0.5 fb^{-1}$.  
+To synchronize the trigger efficiency for Data and MC simulations, the following offline HLT requirements are applied to both Data and MC.
+\begin{itemize}
+\item electron+jets channel: \texttt{HLT\_Ele27\_WP80\_v*}
+\item muon+jets channel: \texttt{HLT\_IsoMu24\_eta2p1\_v*}
+\end{itemize}
+Only lumi-sections included in list of certified good runs provided in the following JSON file are included in the analysis. 
+\begin{itemize}
+\item \texttt{Cert\_190456-208686\_8TeV\_22Jan2013ReReco\_Collisions12\_JSON.txt}
+\end{itemize}
+
+
+
+\begin{table}[h!]
+\small
+\caption{\small Single Electron/Muon Datasets}
+\centering
+\begin{tabular}{| p{2.55 cm}  p{8.5 cm}  p{3 cm} |}
+\hline
+
+\multicolumn{2}{|l}{\textbf{Dataset}} & \textbf{Integrated Luminosity ($\displaystyle{pb^{-1}}$)}\\[0.5ex]
+\hline
+\multicolumn{2}{|l}{\texttt{/SingleMu/Run2012A-22Jan2013-v1/AOD}} & 888\\
+\multicolumn{2}{|l}{\texttt{/SingleMu/Run2012B-22Jan2013-v1/AOD}} & 4442\\
+\multicolumn{2}{|l}{\texttt{/SingleMu/Run2012C-22Jan2013-v1/AOD}} & 7110\\
+\multicolumn{2}{|l}{\texttt{/SingleMu/Run2012D-22Jan2013-v1/AOD}} & 7308\\
+\multicolumn{2}{|l}{\texttt{/SingleElectron/Run2012A-22Jan2013-v1/AOD}} & 888\\
+\multicolumn{2}{|l}{\texttt{/SingleElectron/Run2012B-22Jan2013-v1/AOD}} & 4442\\
+\multicolumn{2}{|l}{\texttt{/SingleElectron/Run2012C-22Jan2013-v1/AOD}} & 7110\\
+\multicolumn{2}{|l}{\texttt{/SingleElectron/Run2012D-22Jan2013-v1/AOD}} & 7308\\
+
+\hline
+\multicolumn{2}{|l}{\textbf{Total Analyzed Integrated Luminosity}} & 19748\\
+\hline
+\end{tabular}
+\label{tab:datasets}
+\end{table}
+
+
+\subsection{Monte Carlo Simulation}
+
+This analysis requires large samples of fully simulated events to generate the different parts of the likelihood functions.  Because the likelihood functions are built by reweighting Standard Model $t\bar t$ events, no special simulated samples are required.  The samples used to model the signal and background functions, including the choice of generator and parton distribution functions, are listed in Table~\ref{tab:sim_samples}. All MC samples were generated in the official CMS Summer12 MC production campaign. More details about the simulated samples used can be found on the B2G Twiki \cite{B2G_twiki}.
+
+In order to build templates of likelihood functions all MC samples are normalized to the corresponding integrated luminosity of data. This is done given the number of simulated events generated and total cross sections of each individual process listed in Table~\ref{tab:sim_samples2}. In addition, they are corrected using various scale factors to account for known discrepancies between data and simulation, as discussed below in Section~\ref{sec:corrections}.
+
+\begin{table}[h!]
+\small
+\caption{\small Monte Carlo Simulation Information I}
+\centering
+\begin{tabular}{| p{2.55 cm} |  p{10 cm} |}
+\hline
+\textbf{Simulated Process} & \textbf{MC Dataset} \\[0.5ex]
+\hline
+$\displaystyle{t\bar{t}}$                    & \texttt{TT\_8TeV-mcatnlo}               \\
+$\displaystyle{W}$+1 Jet                & \texttt{W1JetsToLNu\_TuneZ2Star\_8TeV-madgraph}               \\
+$\displaystyle{W}$+2 Jets               & \texttt{W2JetsToLNu\_TuneZ2Star\_8TeV-madgraph}               \\
+$\displaystyle{W}$+3 Jets               & \texttt{W3JetsToLNu\_TuneZ2Star\_8TeV-madgraph}                \\
+$\displaystyle{W}$+4 Jets               & \texttt{W4JetsToLNu\_TuneZ2Star\_8TeV-madgraph}                \\
+$\displaystyle{Z/\gamma}$+1 Jet         & \texttt{DY1JetsToLL\_M-50\_TuneZ2Star\_8TeV-madgraph}          \\
+$\displaystyle{Z/\gamma}$+2 Jets        & \texttt{DY2JetsToLL\_M-50\_TuneZ2Star\_8TeV-madgraph}         \\
+$\displaystyle{Z/\gamma}$+3 Jets        & \texttt{DY3JetsToLL\_M-50\_TuneZ2Star\_8TeV-madgraph}         \\
+$\displaystyle{Z/\gamma}$+4 Jets        & \texttt{DY4JetsToLL\_M-50\_TuneZ2Star\_8TeV-madgraph}          \\
+$\displaystyle{t}$ (s-channel)          & \texttt{T\_s-channel\_TuneZ2star\_8TeV-powheg-tauola}          \\
+$\displaystyle{t}$ (t-channel)          & \texttt{T\_t-channel\_TuneZ2star\_8TeV-powheg-tauola}         \\
+$\displaystyle{t}$ (tW-channel)         & \texttt{T\_tW-channel-DR\_TuneZ2star\_8TeV-powheg-tauola}       \\
+$\displaystyle{\bar{t}}$ (s-channel)    & \texttt{Tbar\_s-channel\_TuneZ2star\_8TeV-powheg-tauola}       \\
+$\displaystyle{\bar{t}}$ (t-channel)    & \texttt{Tbar\_t-channel\_TuneZ2star\_8TeV-powheg-tauola}        \\
+$\displaystyle{\bar{t}}$ (tW-channel)   & \texttt{Tbar\_tW-channel-DR\_TuneZ2star\_8TeV-powheg-tauola}    \\
+\hline
+\end{tabular}
+\label{tab:sim_samples}
+\end{table}
+
+\begin{table}[h!]
+\small
+\centering
+\begin{tabular}{| p{2.55 cm} | p{4 cm} | p{2 cm} | p{2 cm} |}
+\hline
+\textbf{Simulated Process} & \textbf{Matrix Element Generator} & $\displaystyle{N^{Events}_{Generated}}$ & \textbf{ $\sigma$ ($\displaystyle{pb}$)}\\[0.5ex]
+\hline
+$\displaystyle{t\bar{t}}$               & \texttt{aMC@NLO}               					 & 6824179904 (weights) & 248.8			\\
+$\displaystyle{W}$+1 Jet                & \texttt{MADGRAPH}              & 23038253 & 6662.8 \\
+$\displaystyle{W}$+2 Jets               & \texttt{MADGRAPH}              & 33993463 & 2159.2 \\
+$\displaystyle{W}$+3 Jets               & \texttt{MADGRAPH}              & 15507852 & 640.4  \\
+$\displaystyle{W}$+4 Jets               & \texttt{MADGRAPH}              & 13326400 & 264.0  \\
+$\displaystyle{Z/\gamma}$+1 Jet         & \texttt{MADGRAPH}         	   & 23994669 & 660.6  \\
+$\displaystyle{Z/\gamma}$+2 Jets        & \texttt{MADGRAPH}         & 2345857 & 215.1  \\
+$\displaystyle{Z/\gamma}$+3 Jets        & \texttt{MADGRAPH}          & 10655325 & 65.79  \\
+$\displaystyle{Z/\gamma}$+4 Jets        & \texttt{MADGRAPH}          & 5843425 & 28.59  \\
+$\displaystyle{Z/\gamma}$+4 Jets        & \texttt{MADGRAPH}          & 5843425 & 28.59  \\
+$\displaystyle{t}$ (s-channel)          & \texttt{POWHEG}        & 259176 & 3.79   \\
+$\displaystyle{t}$ (t-channel)          & \texttt{POWHEG}       & 3748155 & 56.4   \\
+$\displaystyle{t}$ (tW-channel)         & \texttt{POWHEG}      & 495559 & 11.1   \\
+$\displaystyle{\bar{t}}$ (s-channel)    & \texttt{POWHEG}     & 139604 & 1.76   \\
+$\displaystyle{\bar{t}}$ (t-channel)    & \texttt{POWHEG}     & 1930185 & 30.7   \\
+$\displaystyle{\bar{t}}$ (tW-channel)   & \texttt{POWHEG} & 491463 & 11.1   \\
+\hline
+\end{tabular}
+\caption{\small Generator information and number of simulated events from Summer12 production of CMS.}
+
+\label{tab:sim_samples2}
+\end{table}
+
+\clearpage
+\section{Selection Criteria}
+\label{sec:selection}
+
+The event selection for this analysis follows the Top PAG Run-1 selection recommendations \cite{top_selection}.  To select top pair events in the lepton + jet channel, the candidate event is required to have a high $p_T$ electron or muon and four or five high $p_T$ jets.  In order to reduce background events such as \texttt{W+jets} two of the jets must be tagged as b-jets.   This analysis is based upon particle flow objects, the details of which are provided in the sub-sections below. 
+
+\subsection{Muon Selection}
+
+For the muon+jets channel, both data and simulation are required to pass additional offline high level trigger \texttt{HLT\_IsoMu24\_eta2p1\_v*}. This trigger selects events with at least one isolated muon of $p_T>24$ GeV and $|\eta|<2.1$.  Additionally, real and simulated events are required to have exactly one global muon candidate with $p_T>26$~GeV and $|\eta|<2.1$. In order to improve the quality of selected muon, it is also required to satisfy the Muon POG ``tight'' criteria for 2012 data \cite{Muon_POG}. The selected muon must have global track fit quality $\chi^2/ndf<10$. It must have at least one muon chamber hit included in the global-muon track fit, with muon segments in at least two muon stations. In addition, the muons must have at least one hit in pixel detector and have at least 5 hits in the inner tracker. In order to assure the muons are from primary collisions, the tracker tracks must have transverse and longitudinal impact parameters with respect to the primary vertex smaller than 2 mm and 5 mm, respectively.
+Additionally, each muon candidate is required to satisfy a particle flow based isolation (\texttt{RelIso}) requirement $\mathrm{PF}_\mathrm{iso}/p_{T}<0.12$ where the isolation is of the ``combined relative'' type with $\Delta\beta$ corrections applied to reduce pileup effects and is computed within a cone size of 0.4. 
+
+\subsection{Electron Selection}
+
+For electron+jets channel, both data and simulation events are required to pass offline trigger \texttt{HLT\_Ele27\_WP80}. This trigger select events with at least one electron with $p_T>27$GeV.  To further select top pair events it is required to have exactly one particle flow electron with $p_T>30$GeV and $|\eta|<2.5$. Electrons with a supercluster in the eta range of 1.4442 and 1.5660, corresponding to the transition region between barrel and end-cap calorimeter are not selected. To insure the selected electron is from primary colision it is required to be associated with tracks that has impact parameter with respect to beam spot smaller than 0.02 cm, and has longitudinal distance from primary vertex smaller than 0.1 cm. In addition, a cut based electron ID is applied and the selected electron is required to satisfy "tight" criteria\cite{electron_cut_based_ID}. Additionally, each electron candidate is required to satisfy a particle flow isolation smaller than 0.1 , with a cone size of 0.3 . 
+
+In order to reject electrons originated from the conversion of photons, a vertex fit conversion method is used and the electron selected is required to pass this conversion veto. In addition, the gsf track associated with the selected electron is required to have no missing hits in inner tracking system.
+
+
+\subsection{Veto Leptons}
+Finally, to suppress signal from dileptonic top events, any event with a second veto muon or veto electron is not selected.
+
+The veto muon is defined as having particle flow muon ID, being a global muon, with $p_T>10 GeV$, $|\eta|<2.5$ and $RelIso(R=0.4)<0.2$.
+
+The veto electron is defined as an electron with $p_T>20$GeV, $|\eta|<2.5$ and $RelIso(R=0.3)<0.15$. In addtion, the veto electrons are required to pass cut based electron ID with "Loose" working point as defined in EGamma POG Twiki\cite{electron_cut_based_ID}.
+
+\subsection{Jets}
+
+The hadronic jets used in this analysis are reconstructed using the anti-kT algorithm with cone size 0.5. Jet energy corrections have being applied using the JEC from \texttt{Winter14(5\_3\_X)} as recommended by JetMET POG \cite{JEC_intro}\cite{JEC_paper}. The list of JEC txt files used is as follows:
+\begin{itemize}
+\item \texttt{START53\_V27\_L1FastJet\_AK5PFchs.txt}
+\item \texttt{START53\_V27\_L2Relative\_AK5PFchs.txt}
+\item \texttt{START53\_V27\_L3Absolute\_AK5PFchs.txt}
+\item \texttt{Winter14\_V5\_DATA\_L1FastJet\_AK5PFchs.txt}
+\item \texttt{Winter14\_V5\_DATA\_L2Relative\_AK5PFchs.txt}
+\item \texttt{Winter14\_V5\_DATA\_L3Absolute\_AK5PFchs.txt}
+\item \texttt{Winter14\_V5\_DATA\_L2L3Residual\_AK5PFchs.txt}
+\end{itemize}  
+
+All jets are required to have reconstructed pseudorapidities in the region $|\eta|<2.5$.  The selected jets in each event are required to have transverse momenta larger than 30GeV. Events with more than 5 selected jets or less than 4 selected jets are excluded. 
+
+In addition to these kinematic requirements, we also require that at least two jets be identified as a b-jet.  The b-jet identification is based upon the Combined Secondary Vertex (CSV) tagging algorithm \cite{CSV_note} and requires that the CSV discriminator be larger than 0.679.
+
+\subsection{Cut-flow}
+
+The selection criteria are applied sequentially to both data and MC.  The numbers of real and simulated events passing each step are summarized in Table~\ref{tab:cut-flow}.  The final entry in the table lists the number selected events for which the kinematic reconstruction [as described in section~\ref{sec:reconstruction}] is successful. Only in the last step, the MC event rates have been corrected using scale factors to account for efficiency differences between data and MC for the lepton ID, trigger, and btagging requirements. Total number of events in simulation has been normalized to the integrated luminosity corresponding to the data using the total cross sections for each individual process as listed in Table~\ref{tab:sim_samples2}. 
+
+
+\begin{table}[h!]
+\small
+\centering
+\begin{tabular}{|c | c  c | c  c|}
+\hline
+ & \multicolumn{2}{|c|}{e+jets}&\multicolumn{2}{|c|}{$\mu$+jets} \\
+\hline
+\textbf{Selection Step} & $N_{Data}$ & $N_{MC}$ & $N_{Data}$ & $N_{MC}$ \\
+\hline
+trigger & 268293848 & 29318762 & 123122494 & 32845362  \\
+lepton & 64361692 & 20186742 & 32845362 & 25208917 \\ 
+dilepton veto & 62447916 & 19446044 & 74041500 & 24085598  \\ 
+$N_{jets}\geqslant4$ & 254892 & 227859 & 222279 & 246025  \\
+$N_{btags}\geqslant2$ & 56015 & 62788 & 55730 & 67974  \\
+$N_{jets}\leqslant5$ and kin Reco & 42923 & 47199 & 45321 & 51061  \\
+\hline
+\end{tabular}
+\caption{\small Event yields after HLT trigger applied, contains one good lepton, not containing another lepton, has at least four selected jets, has at least two of the jets tagged as b jets, has no more than 5 selected jets while successfully being reconstructed. MC corrections such as trigger efficiency, pileup re-weighting etc have been applied in the last step of the cut flow. All MC events have been normalized to the same integrated luminosity as Data.}
+
+\label{tab:cut-flow}
+\end{table}
+
+The effectiveness of the selection criteria is illustrated in Figs.~\ref{tagging_results}.  The plot shows the normalized abundances of simulated $t\bar t$ and background events as functions of reconstructed $t\bar t$ mass before the application of the criteria.  The sample is dominated by background from $W$+jets production.  The plot on the right shows the same distributions after the application of the selection criteria.  Clearly the signal $t\bar{t}$ is greatly enhanced with respect to the backgrounds.   
+
+Note that in the last step we merged several background processes into a single template called {\it other backgrounds}, which includes single top production, Drell-Yan, and $t\bar{t}$ events that are not e+jets or mu+jets.  On the other hand, we separate W+Jets and QCD process from other backgrounds. The motivation is that the processes included in our defined "other backgrounds" are well modeled by MC simulations. By merging them together into one template we essentially fix the relative compositions among those processes according to the expected values given by MC.  In contrast, according to many existing analysis the W+Jets are not very well modeled in the MC simulations we used that are generated using matrix element calculated in leading order. For data driven QCD the uncertainty of normalization is fairly large as discussed in section [\ref{sec:data driven qcd}].  So we separate W+Jets process and QCD process from other backgrounds in the templates and later simultaneously fit for the normalization during the template fit.
+
+After applying the selection criteria and reconstruction algorithm to the simulated data sets, semi-leptonic top pair events comprise 90\% of the resulting sample. The relative fractions of events from signal and various backgrounds are listed in Table~\ref{tab:mc_fractions}. The dominant background is "other backgrounds". 
+
+\begin{table}[h!]
+\small
+\centering
+\begin{tabular}{|c | c  c | c  c|}
+\hline
+ & \multicolumn{2}{|c|}{e+jets}&\multicolumn{2}{|c|}{$\mu$+jets} \\
+\hline
+\textbf{Process} & $N_{MC}$ & Fraction & $N_{MC}$ & Fraction \\
+\hline
+$q\bar{q}\rightarrow t\bar{t}$ & 5173 & 11.0 & 5510 & 10.8 \\
+$gg/qg\rightarrow t\bar{t}$ & 33824 & 71.7 & 36126 & 70.8 \\ 
+other backgrounds & 6914 & 14.7 & 8530 & 16.7 \\ 
+W+Jets & 764 & 1.6 & 894 & 1.8 \\
+QCD &522 & 1.1 & NA & NA \\
+Total & 47199 & 100 & 51061 & 100 \\
+\hline
+\end{tabular}
+\caption{\small Expected number of events and relative event composition after event selection and reconstruction, by counting of MC templates. Fractions are in terms of percent. Data driven QCD process is included in e+jets channel only. The normalization of QCD follows the discussion of section [ref]. }
+\label{tab:mc_fractions}
+
+\end{table}
+
+\begin{figure}[h!]
+\includegraphics[width = 0.4\textwidth]{other/no_selection.jpg}
+\includegraphics[width = 0.45\textwidth]{other/cutflow_last_step_mu.pdf}
+\centering
+\caption{\small \small The $t\bar{t}$ invariant mass distributions of normalized signal and background Monte Carlo samples before event selection (a) and after event selection (b). }
+\label{tagging_results}
+\end{figure}
+
+% new plots
+\subsection{Control Plots}
+A set of control plots that compare MC and data distributions of several kinematic observables are shown in this section. All the plots are from events that passed all selection cuts, but before any further reconstruction quality cuts are made. 
+
+\begin{figure}[htb]
+\includegraphics[width = 0.48\textwidth]{mu/lep_pt_mu}
+\includegraphics[width = 0.48\textwidth]{el/lep_pt_el}
+\centering
+\caption{\small \small The e/$\mu$ $p_T$ distributions of normalized signal and background Monte Carlo samples after event selection, for $mu$+jets channel (a) and e+jets(b). }
+\label{fig:lep_pt}
+\end{figure}
+
+\begin{figure}[htb]
+\includegraphics[width = 0.48\textwidth]{mu/jets_pt_mu}
+\includegraphics[width = 0.48\textwidth]{el/jets_pt_el}
+\centering
+\caption{\small \small The jets $p_T$ distributions of normalized signal and background Monte Carlo samples after event selection, for $mu$+jets channel (a) and e+jets(b). }
+\label{fig:jets_pt}
+\end{figure}
+
+\begin{figure}[htb]
+\includegraphics[width = 0.48\textwidth]{mu/MET_mu}
+\includegraphics[width = 0.48\textwidth]{el/MET_el}
+\centering
+\caption{\small \small The MET distributions of normalized signal and background Monte Carlo samples after event selection, for $mu$+jets channel (a) and e+jets(b). }
+\label{fig:met}
+\end{figure}
+
+\clearpage
+\section{Event Reconstruction}
+\label{sec:reconstruction}
+
+Real and simulated events containing a charged lepton and four or five jets are reconstructed by minimizing a likelihood estimator that is a function of the neutrino longitudinal momentum $p_\nu^z$ and five momentum scaling factors $\lambda_j$.  For each final state particle assignment hypothesis, the 4-vectors of the charged particles are each momentum-scaled,
+\begin{equation}
+\begin{array}{lll}
+\boldsymbol{p_\ell} = \left(\lambda_1|\vec p_\ell |, \lambda_1\vec p_\ell\right) & &
+\boldsymbol{p_{b\ell}} = \left(\sqrt{m_b^2+\lambda_2^2|\vec p_{b\ell}|^2}, \lambda_2\vec p_{b\ell}\right)  \\
+\boldsymbol{p_{h1}} = \left(\lambda_3|\vec p_{h1} |, \lambda_3\vec p_{h1}\right) &
+\boldsymbol{p_{h2}} = \left(\lambda_4|\vec p_{h2} |, \lambda_4\vec p_{h2}\right) &
+\boldsymbol{p_{bh}} = \left(\sqrt{m_b^2+\lambda_5^2|\vec p_{bh}|^2}, \lambda_5\vec p_{bh}\right)
+\end{array}
+\end{equation}
+
+and the neutrino is constructed from the missing transverse momentum after scaling
+\begin{align}
+\vec p^\perp_\nu &= -\left[\lambda_1 \vec p^\perp_\ell + \lambda_2\vec p^\perp_{b\ell}+ \lambda_3\vec p^\perp_{h1}
++ \lambda_4\vec p^\perp_{h2}+ \lambda_5\vec p^\perp_{bh} + \vec p^\perp_\mathrm{recoil}\right ] \nonumber \\
+\boldsymbol{p_\nu} &= \left(\sqrt{(p_\nu^z)^2+|p^\perp_\nu |^2}, \vec p^\perp\nu, p_\nu^z\right)
+\end{align}
+where $\vec p^\perp_\mathrm{recoil}$ is the total transverse momentum of the event after the removal of the five particles.  The six scaled and reconstructed four-vectors are used to calculate the following four invariant masses to be used in the likelihood function,
+\begin{equation}
+\begin{array} {ll}
+q_W^2[\ell] = \left(\boldsymbol{p_\ell}+\boldsymbol{p_\nu}\right)^2 & q_t^2[\ell] = \left(\boldsymbol{p_\ell}+\boldsymbol{p_\nu}+\boldsymbol{p_{b\ell}}\right)^2  \\
+q_W^2[h] = \left(\boldsymbol{p_{h1}}+\boldsymbol{p_{h2}}\right)^2 & q_t^2[h] = \left(\boldsymbol{p_{h1}}+\boldsymbol{p_{h2}}+\boldsymbol{p_{bh}}\right)^2 
+\end{array}
+\end{equation}
+where the invariant masses of the hadronic $W$ boson (top quark) are functions of the parameters $\lambda_3,\lambda_4(,\lambda_5)$ and the invariant masses of the leptonic states depend upon all six parameters.  These are combined in a likelihood function that constrains and tests the consistency of the masses with the hypothesis, the consistency of the momentum scaling factors with unity, and the consistency of the b-jet identification with the measured b-tag discriminators $d_j$,
+\begin{align}
+\chi^2 =& -2\sum_{i=\ell,\mathrm{h}}\ln\left\lbrace\frac{C}{(q_t^2[i]-m_t^2)^2+m_t^2\Gamma_t^2}\cdot\frac{(m_t^2-q_W^2[i])^2(2m_t^2+q_W^2[i])}{(q_W^2[i]-m_W^2)^2+m_W^2\Gamma_W^2}\right\rbrace + \sum_{j=1}^5\frac{(\lambda_j-1)^2}{\sigma_j^2} \nonumber \\
+& -2\ln\left\{g_{b}(d_{b\ell})g_{b}(d_{bh})g_{q}(d_{h1})g_{q}(d_{h2})\right\}
+\end{align}
+where $C$ is a constant normalization parameter, $\sigma_j$ is the fractional momentum resolution for particle $j$ (assumed to be 0.1 for jets and 0.03 for muons), $g_{b}(d)$ are discriminator distribution functions for b-jets from $t$ decays, and $g_{q}(d)$ is the discriminator distribution function for light quark jets from $W$ decays.  In events with an extra jet, a discriminator distribution function $g_{other}(d)$ for jets produced in association with $t\bar{t}$ pairs is also used. These discriminator distribution functions are pictured in Fig.~\ref{fig:CSV_distributions} to illustrate the distinction they provide. 
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.6\linewidth]{other/csv_distributions.pdf}
+  \caption{\small The CSV discriminator distribution functions used in the kinematic fit to distinguish b jets [red] from hadronic W subjets [blue] and incidental extra jets [green].}
+    \label{fig:CSV_distributions}
+  \end{center}
+\end{figure}
+
+The minimization procedure is started assuming that all momentum scaling factors are unity, $\lambda_j=1$.  With this assumption, the leptonic $W$ mass constraint has, in general, two solutions for $p_\nu^z$.  To avoid local minima, both solutions are used as starting points for the minimization procedure and the resulting fit with the smallest $\chi^2$ is kept.  This function was designed to constrain the top masses with simple Lorentzian functions that include widths and the $W$ masses to the slightly modified and correlated Lorentzian shapes expected for $t\to Wb$ decays.  In actual fact, the presence of the momentum scaling factors allows the best fit masses to converge to $m_t$ and $m_W$ in all cases. In both data and simulation, we use the accepted value of the $W$ mass, $m_W = 80.4$~GeV. We assume $m_t=172.5$~GeV and $m_t=173.3$~GeV in simulation and data respectively.
+
+The fitting procedure is performed on all possible jet orderings for each of the topologies used in the analysis and the configuration with the smallest value of $\chi^2$ is retained.  The reconstruction of the kinematic variables works reasonably well.  The correlations of the generated variables ($x_F$, $M$, $c_*$) and the reconstructed variables ($x_\mathrm{r}$, $M_\mathrm{r}$, $c_\mathrm{r}$) are shown in Fig.\ref{fig:cost_reco}.  Linear behavior with unit slopes is observed over the range of available statistics.  The $c_*$ versus $c_\mathrm{r}$ also shows evidence of quark direction sign error as expected from Fig.~\ref{fig:distributions}(d).  
+
+% new plots
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.48\linewidth]{mu/xf_2D_mu}
+    \includegraphics[width=0.48\linewidth]{el/xf_2D_el}   
+    \includegraphics[width=0.48\linewidth]{mu/Mtt_2D_mu}
+    \includegraphics[width=0.48\linewidth]{el/Mtt_2D_el}
+    \includegraphics[width=0.48\linewidth]{mu/cstar_2D_mu}
+    \includegraphics[width=0.48\linewidth]{el/cstar_2D_el}
+  \caption{\small The correlations of the generated/reconstructed variable pairs $x_F$/$x_\mathrm{r}$ , $M$/$M_\mathrm{r}$ and $c_*$/$c_\mathrm{r}$ for a sample of simulated $t\bar t$ events. The figures at the left are from $\mu$+jets channel, at right are e+jets channel.}
+    \label{fig:cost_reco}
+  \end{center}
+\end{figure}
+
+We also further check the effectiveness of top quark pairs reconstruction by plotting the residual of $x_F$, $M_{t\bar{t}}$, $c_*$, shown in Fig.\ref{fig:reco_res}
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.48\linewidth]{mu/xf_res_mu}
+    \includegraphics[width=0.48\linewidth]{el/xf_res_el}   
+    \includegraphics[width=0.48\linewidth]{mu/Mtt_res_mu}
+    \includegraphics[width=0.48\linewidth]{el/Mtt_res_el}
+    \includegraphics[width=0.48\linewidth]{mu/cstar_res_mu}
+    \includegraphics[width=0.48\linewidth]{el/cstar_res_el}
+  \caption{\small The residual of the generated/reconstructed variable pairs $x_F$/$x_\mathrm{r}$ , $M$/$M_\mathrm{r}$ and $c_*$/$c_\mathrm{r}$ for a sample of simulated $t\bar t$ events. The figures at the left are from $\mu$+jets channel, at right are e+jets channel.}
+    \label{fig:reco_res}
+  \end{center}
+\end{figure}
+
+
+\clearpage
+\section{Template Fitter}
+\label{sec:fitter}
+The main goal for this analysis is to simultaneously measure Forward-backward asymmetry ($A_{FB}$) and fraction of $q\bar{q}$ initiated $t\bar{t}$ events, $R_{q\bar{q}}$. We perform the parameter estimation by doing binned maximal likelihood fit using the 3 dimensional templates as described in Eq.[\ref{eq:template_schemeone}].  
+\subsection{THETA Package}
+\label{sec:theta_methods}
+We use THETA Package for template fit.[cite] The main idea is assume data event rates follow Poisson distribution for every bin in the phase space spanned by $cos_\theta*,M_{t\bar{t}}$ and $|x_F|$. The statistical model is then a product of independent Poisson distributions:
+\begin{equation}
+p(\bm{n}^{Data}|\bm\theta)=\prod_i Poisson(n_i^{Data}|\lambda_i(\bm\theta))
+\label{eq:theta_likelihood}
+\end{equation}
+where $\bm{n}^{Data}=(n_1,n_2,...,n_i)$ represent the number of events in each bin. $\lambda_i$ is the expected number of events in bin i, which is given by the sum of signal and background events in that bin:
+\begin{align}
+\lambda_i(\bm\theta) = n(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r}|\bm\theta) = \sum_j n^j_\mathrm{bk}(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r}|\bm\theta)+n_{gg}(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r}|\bm\theta) +n_\mathrm{q\bar{q}}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r}|\bm\theta)
+\label{eq:theta_exp_evts}
+\end{align}
+Here $\bm\theta$ represents all parameters, including the parameters of interest and nuisance parameters. There are two types of nuisance parameters in the fit. First type is the one that controls relative compositions of individual background processes, including $R_{WJets}$,$R_{other}$ and $R_{QCD}$, which are defined in Equation.~\ref{eq:template_schemetwo}. The second type of nuisance parameters are introduced for evaluation of systematic uncertainties, summarized in Section.~\ref{sec:corrections}
+
+We measure parameters of interest together with nuisance parameters by maximizing total likelihood given data distributions. In Formula.~\ref{eq:theta_exp_evts}  expected number of events for bin i is the sum of signal and background templates ( histograms ). Depend on the choice of $\bm\theta$ the templates have different shapes and normalization. The way the templates change is modeled by template morphing. For every parameter, for instance $A_{FB}$, three versions of templates are provided, corresponding to $A_{FB}= -1,0,+1$. Note for this parameter, $A_{FB}$ templates are only provided for $n_{q\bar{q}}$ as it is the only process that depend on $A_{FB}$ in our model. Then during the fit, for each value of $A_{FB}$, the corresponding likelihood which is a function of $A_{FB}$ is calculated given expected number of events for every bin. For simplicity, let's focus on the i'th bin, denote as $n_{q\bar{q}}(A_{FB})$. This number is derived from interpolation of three set of numbers for the same bin,  $n_{q\bar{q}}(A_{FB}=-1,0,+1)$. In Theta, the interpolation is cubic for $|\theta|<1$ and linear for $|\theta|>1$.
+
+There is another way to model the change of expected number of events by introducing a parameter representing event rate. In our case, we introduce a nuisance parameter $c_{lumi}$ for the integrated luminosity. This parameter models the global normalization for all processes. Now the expected number of events for every bin looks like this:
+\begin{align}
+\lambda_i(\theta)= n(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r}|\theta) =c_{lumi}\left[\sum_j n_\mathrm{bkg_j}(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r}|\theta)+n_{gg}(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r}|\theta) +n_\mathrm{q\bar{q}}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r}|\theta) \right]
+\label{eq:theta_exp_evts}
+\end{align}
+
+Finally, the likelihood also include the proper prior distribution for all parameters. Denote the prior distribution for parameter $\theta_j$ to be $\pi(\theta_j)$, the likelihood given data distribution become:
+\begin{equation}
+L(\bm{n}^{Data}|\bm \theta )=\prod_i Poisson(n_i^{Data}|\lambda_i(\bm{\theta}))\prod_j \pi(\theta_j)
+\label{eq:theta_likelihood}
+\end{equation}
+
+And the measured parameter values $\bm{\hat{\theta}}$ is taken as the maximal likelihood estimator.
+
+\begin{equation}
+\bm{\hat{\theta}} = argmax_{\bm{\theta}}L(\bm{n}^{Data}|\bm{\theta})
+\end{equation}
+
+In practice we choose to minimize the negative log-likelihood (NLL) below:
+\begin{equation}
+NLL(\bm n^{Data}|\bm \theta) = - \left[ \sum_i Poisson(n_i^{Data}|\lambda_i(\bm{\theta}) + \sum_j \pi(\theta_j) \right]
+\label{eq:NLL}
+\end{equation}
+
+% new subsection
+\subsection{Template binning} 
+Since we perform a binned likelihood fit based on 3 dimensional templates, we studied the optimal binning for our templates. On one hand we chose the binning such that every bin has sufficient number of events, on the other hand there are more bins in regions of phase space where signal and background distributions are more statistically distinguishable. 
+
+In addition we choose to limit the phase space of events in the region where $M_{t\bar{t}} < 980 \, GeV$ for two reasons. First reason is the MC templates beyond this kinematic region have much fewer events passed all selections, resulting a poor modeling of expected data distributions. Second reason is events with $M_{t\bar{t}} > 980 \, GeV$ tend to be boosted, causing decay products of top/anti-top quarks, especially hadronic decay side, to be  merged into fewer jets. Because our kinematic re-construction algorithm assumed fully resolved event topology, this causes a poorly reconstructed $t/\bar{t}$ momentum. 
+
+In the end, the templates are constructed from un-binned simulated events with the following binning:
+\begin{itemize}
+\item $c*$ : [-1.0,1.0], every 0.1
+\item $M_{t\bar{t}}$ : [350,980], every 30 GeV
+\item $|x_F|$ : [0,0.02,0.04,0.06,0.08,0.1,0.12,0.14,0.16,0.18,0.2,0.22,0.26,0.3,0.6]
+\end{itemize}
+
+The Fig.[\ref{fig:template_shapes_mu}] and Fig.[\ref{fig:template_shapes_el}] shows the projections of templates in all three dimensions for signal and background processes. The clear distinction of various process can be seen which suggest the potential statistical power of the template fit. 
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{mu/comb_x_shapes}
+    \includegraphics[width=0.49\linewidth]{mu/comb_y_shapes}
+    \includegraphics[width=0.49\linewidth]{mu/comb_z_shapes}
+    
+  \caption{\small The profile of templates of all processes projected to each of the three dimensions for $\mu+jets$ channel.}
+    \label{fig:template_shapes_mu}
+  \end{center}
+\end{figure}
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{el/comb_x_shapes}
+    \includegraphics[width=0.49\linewidth]{el/comb_y_shapes}
+    \includegraphics[width=0.49\linewidth]{el/comb_z_shapes}
+    
+  \caption{\small The profile of templates of all processes projected to each of the three dimensions for $e+jets$ channel.}
+    \label{fig:template_shapes_el}
+  \end{center}
+\end{figure}
+
+
+Although the original templates are 3 dimensional so  all three kinematic variables are fully correlated, we unrolled the templates into 1 dimension with arbitrary order of bins so we can use Theta to do the template fit for us. The Fig.[\ref{fig:1D template}] shows the unrolled 1D distribution for the combined simulated events for $\mu+jets$ with $Q>0$ for illustration purpose. Note this 1-D template is the one that actually feed into template fit, and the number of events in each bin corresponds to $\lambda_i$ in Eq.[\ref{eq:theta_likelihood}], which is the expected number of observations. 
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{other/m_1D_temp_MC_data}
+    \includegraphics[width=0.49\linewidth]{other/m_1D_temp_MC_data_zoom}
+    
+  \caption{\small The unrolled 1D distribution of all simulated process combined together according to their cross sections and normalized to the same integrated luminosity as collected data. Showing $\mu + jets$ with $Q>0$ only for simplicity. Left:entire distribution. Right: a zoom in of the figure in the left }
+    \label{fig:1D template}
+  \end{center}
+\end{figure}
+
+
+\subsection{Template building}
+The key ingredients in the template fit method is to produce up and down templates, which are histograms that contains information about expected number of events in every bin, corresponding to $\theta_j^{up}$ and $\theta_j^{down}$. Together with nominal templates, $\lambda_i(\theta)$ can be inferred by interpolating from these three sets of templates. 
+
+In order to build templates that is consistent with the fitting framework described above, we reformulate our statistical model from  probability distribution to the distribution of expected number of events. So we change Eq.~[\ref{eq:template_schemetwo}] to the following:
+
+\begin{align}
+F(\bm{x};Q|\bm{\theta}) = \sum_j F_{bkg_j}(\bm{x};Q|\bm{\theta})+F_{gg}(\bm{x};Q|\bm{\theta})+F_{q\bar{q}}(\bm{x};Q|\bm{\theta})
+\end{align}
+
+Here $\bm{x}=(|x_{F}|,M_{t\bar{t}},c*)$ is the triple of reconstructed kinematic variables of top quark, Q is the charge of the lepton in the event as we fit $Q=\pm1$ events separately. All $F(\bm{x};Q|\bm{\theta})$ are from fully selected and reconstructed events from MC simulation ( except for data driven templates ) and are normalized to the same integrated luminosity as Data.
+
+So here we list all relevant information about producing up/down templates for all parameters. We start from our parameters of interest, $A_{FB}$ and $R_{q\bar{q}}$. For $A_{FB}$, based on Eq.[4,ref], we build our templates from $q\bar{q}\rightarrow t\bar{t}$ templates by first symmetrize over production angle $c*$ and then re-weight based on the value of $A_{FB}$. 
+\begin{equation}
+\label{eq:Fqq_AFB}
+F_{q\bar{q}}(\bm{x};Q|A_{FB}) = F_{qs}(\bm{x};Q)+ A_{FB} F_{qa}(\bm{x};Q)
+\end{equation}
+Where $F_{qs}$ is the symmetrized $q\bar{q}$ templates which is produced from the original $q\bar{q}$ MC templates, $F_{q\bar{q}}$, following the description of Section.~\ref{sec:analysis scheme}
+\begin{equation}
+F_{qs}(|x_F|,M_{t\bar{t}},c*;Q) = \frac{1}{2}\left[ F_{q\bar{q}}(|x_F|,M_{t\bar{t}},c_*;Q)+F_{q\bar{q}}(|x_F|,M_{t\bar{t}},-c_*;-Q)\right]
+\end{equation}
+
+% new edit
+In Fig.\ref{fig:AFB_templates} we show the $F_{q\bar{q}}(c^*|A_{FB})$ templates corresponding to $A_{FB}=-1.0,0,+1.0$ for both channels.
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{mu/mu_f_combo__qq__AFB__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{el/el_f_combo__qq__AFB__cstar_sys}
+
+  \caption{\small The distribution of MC simulated $q\bar{q}\rightarrow t\bar{t}$ events with $A_{FB}$= -1.0 (blue), 0 (black) and +1.0 (red), for $\mu+jets$(left) and $e+jets$(right)}
+    \label{fig:AFB_templates}
+  \end{center}
+\end{figure}
+
+Note here $F_{gg}$ is the template consist of both $gg\rightarrow t\bar{t}$ and non-gg initiated $t\bar{t}$ events. The $gg$ initiated events are symmetric in $c_*$, by performing the same procedure that is applied to build $F_{q\bar{q}}$. In comparison, non-gg initiated part of $F_{gg}$ is not symmetrized in order to preserve the intrinsic forward-backward asymmetry in $qg$ initiated $t\bar{t}$ events. This guarantees the $A_{FB}$ fit from data only reflects the asymmetry in $q\bar{q}\rightarrow t\bar{t}$ process, as desired. 
+
+Next, we produce the up/down templates representing the relative abundance of $q\bar{q}\rightarrow t\bar{t}$ in all signal $t\bar{t}$ events, denote as $R_{q\bar{q}}$ in Eq.[\ref{eq:template_schemetwo}]. Per the design of Theta Framework, instead of using $R_{q\bar{q}}$ as parameter directly,  we introduced a different parameter, $SF_{q\bar{q}}$ which is a scale factor on the normalization of $q\bar{q}$ templates. The nominal value of $SF_{q\bar{q}} = 1$. We then have templates of $F_{q\bar{q}}$ and $F_{gg}$ as follows:
+\begin{align}
+\label{eq:SF_qq}
+F_{q\bar{q}}(\bm{x};Q|SF_{q\bar{q}})=SF_{q\bar{q}} * F_{qs}(\bm{x};Q) 
+\end{align}
+\begin{align}
+F_{gg}(\bm{x};Q|SF_{q\bar{q}})=\frac{N_{t\bar{t}}-SF_{q\bar{q}}N_{q\bar{q}}}{N_{t\bar{t}}-N_{q\bar{q}}}\, F_{gg}(\bm{x};Q)
+\end{align} 
+Where $N_{t\bar{t}}$ and $N_{q\bar{q}}$ are nominal number of events in signal $t\bar{t}$ process and $gg$ process. The above equations implicitly constrain $N_{t\bar{t}}$ to be a constant for any value of $SF_{q\bar{q}}$, which is implied in the original formalism of our statistical model in Eq.[\ref{eq:template_schemetwo}]. Note here in Eq.[\ref{eq:SF_qq}] we scale symmetric $q\bar{q}$ templates rather than the one with non-zero $A_{FB}$ as in Eq.[\ref{eq:Fqq_AFB}] to get the up/down templates for $SF_{q\bar{q}}$. This because we want to model the change of distribution shape and normalization due to $A_{FB}$ and $SF_{q\bar{q}}$ separately, although they are correlated in predicting the expected number of events for every bin. 
+
+In addition, we note here $F_{q\bar{q}}$ and $F_{gg}$ are the only templates depend on $SF_{q\bar{q}}$, and it has no effect on $F_{bkg}$. $SF_{q\bar{q}}$ is directly measured from the fitting, and $R_{q\bar{q}}$ is related to $SF_{q\bar{q}}$ via the following equation:
+\begin{equation}
+R_{q\bar{q}} = SF_{q\bar{q}}\,R_{q\bar{q}}^0 = \frac{N_{q\bar{q}}^{fit}}{N_{t\bar{t}}^{fit}}
+\end{equation}
+In our analysis we use the post-fit counts, $N_{q\bar{q}}^{fit}$ and $N_{t\bar{t}}^{fit}$ to calculate the fit $R_{q\bar{q}}$.
+
+Similarly, we introduce a scale factor for each background process, $SF_{bkg_j}$ that corresponds to $R_{bkg_j}$ defined in Eq.[\ref{eq:template_schemetwo}]. The corresponding templates are defined as follows:
+\begin{equation}
+\label{eq:SF_bkg}
+F_{bkg_j}(\bm{x};Q|SF_{bkg}) = SF_{bkg_j}\,F_{bkg_j}(\bm x ;Q) 
+\end{equation}
+
+\begin{equation}
+F_{gg}(\bm{x};Q|SF_{bkg_j}) = \frac{N_{t\bar{t}}-(SF_{bkg_j}-1)\,N_{bkg_j}}{N_{t\bar{t}}}\,F_{gg}(\bm{x};Q)
+\end{equation}
+
+\begin{equation}
+F_{q\bar{q}}(\bm{x};Q|SF_{bkg_j}) = \frac{N_{t\bar{t}}-(SF_{bkg_j}-1)\,N_{bkg_j}}{N_{t\bar{t}}}\,F_{q\bar{q}}(\bm{x};Q)
+\end{equation}
+
+From now on, we will use $R_{bkg_j}$ exclusively, instead of usng $SF_{bkg_j}$, for simplicity and consistency with the original formalism of our model described in Section.[\ref{sec:analysis scheme}].
+
+Finally, the up/down templates associated with systematic uncertainties are produced by applying alternative re-weighting factors $w_{\pm}$ on MC templates, which correspond to $\pm 1 \sigma$ variation from nominal templates. 
+
+% new edit
+In Fig.\ref{fig:gg_SF_bkg_templates} we show $F_{gg}(\bm{x}|SF_{other\_bkg})$ and $F_{other\_bkg}(\bm{x}|SF_{other\_bkg})$ templates for $\mu$+jets channel with $SF_{other\_bkg}= 0.2,1.0,1.8$, in three projected directions of templates. It shows for the "up" templates, that is $SF_{other\_bkg}=1.8$ (the normalization of $other\_bkg$ process being 1.8 times the nominal value), the total events of gg/qg process become fewer than its nominal value, while $other\_bkg$ template is scaled up by 1.8 times, as we expected.
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{mu/mu_f_combo__other_bkg__R_other_bkg_mu__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{mu/mu_f_combo__gg__R_other_bkg_mu__cstar_sys}
+
+  \caption{\small The $c*$ projection of $F_{gg}$ (left) and $F_{other\_bkg}$ (right) templates with $SF_{other\_bkg}$ = 0.2 (blue), 1.0 (black) and 1.8 (red)}
+    \label{fig:gg_SF_bkg_templates}
+  \end{center}
+\end{figure}
+
+
+\subsection{Lepton channel combination} % new section
+\label{sec:lepton combination}
+
+In this analysis, we divide observed data into four parts ( in Theta, they are called "Observable"), depending on lepton type of final states ( e or $\mu$ ) and type of lepton charge type ( positive or negative ), and fit each of the four parts individually. However, in our model, the parameters $A_{FB}$ and $R_{q\bar{q}}$ are independent with final states. As a result, we perform the simultaneous template fit in Theta to find the best $A_{FB}$ and $R_{q\bar{q}}$ that fit the data. 
+
+The basic idea of combined fit is very simple. Instead of minimizing negative log likelihood as defined in Eq.[\ref{eq:NLL}] for all four observable, we minimize the sum of the NLL, as defined below:
+\begin{equation}
+NLL_{total} (\bm n^{Data}) = \sum_{Q=\pm 1} NLL(\bm n^{Data};e, Q |A_{FB},R_{q\bar{q}},\bm \theta_{e}) +  \sum_{Q=\pm 1} NLL(\bm n^{Data};\mu, Q |A_{FB},R_{q\bar{q}},\bm \theta_{\mu})
+\end{equation}
+
+Note that fit takes into the correlations of all four observable via template morphing. We build the up/down templates for each parameter $\theta_i$ that reflect the proper correlation. For example, change in $A_{FB}$ will and only will affect the distribution of $q\bar{q}\rightarrow t\bar{t}$ process for all four both $e+jets$ and $\mu + jets$ final states. It will not affect distributions of any other processes. The correlation between $e\/\mu$ channels can be seen from Fig.[\ref{fig:AFB_templates}].
+
+Unlike the common parameter $A_{FB}$ and $R_{q\bar{q}}$, we model the normalization of background processes , such as $R_{WJets}$, $R_{other\_bkg}$ and $R_{QCD}$, separately for $e+jets$ and $mu+jets$ channels. So we introduce two nuisance parameters for each type of background process, one for $e+jets$ channel, another for $\mu+jets$ channel. For instance, we introduce $R_{WJets\_el}$ and $R_{WJets\_\mu}$ and build two sets of un-correlated templates, as shown in Fig.[??]
+
+A final note is on the set of templates for same lepton type, but different charge type , such as $F_{q\bar{q}}(\bm x;e,Q>0|A_{FB})$ and $F_{q\bar{q}}(\bm x;e,Q<0|A_{FB})$. We assume they are always correlated. Therefore most of the templates we show are charge summed for visualization purpose, while in template fit the charge separated templates are used for calculating likelihood.
+
+A complete list of figures for templates that are used for the fitting is provided in Appendix.[\ref{sec:all templates}]. More details of all parameters are listed in Table.[\ref{table:priors}]
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{mu/mu_f_combo__WJets__R_WJets_mu__xf_sys}
+    \includegraphics[width=0.49\linewidth]{el/el_f_combo__WJets__R_WJets_el__xf_sys}
+
+  \caption{\small The $|x_F|$ projection of $F_{WJets}(\bm x;e|R_{WJets\_el})$ (left) and $F_{WJets}(\bm x;\mu|R_{WJets\_\mu})$ (right) templates with $R_{WJets\_el}$/$R_{WJets\_\mu}$ = 0.2 (blue), 1.0 (black) and 1.8 (red)}
+    \label{fig:gg_SF_bkg_templates}
+  \end{center}
+\end{figure}
+
+
+\subsection{Priors}
+As described in Section.[\ref{sec:theta_methods}] the likelihood also include the prior distribution for each parameter. In addition, since the template morphine is based on interpolation of up/down/nominal templates, we also need to keep track of the choice of up/down templates corresponding to each parameters. We summarize these information in Table.[\ref{table:priors}]
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|c|c c|c c c| c |}
+\hline
+Parameter     & Template Type & Prior         & down  & central  & up  & channel   \\ \hline
+$A_{FB}$      & shape         & flat         & -1.0  & 0.0  & 1.0  & both \\
+$R_{q\bar{q}}$ & shape         & flat         & 0.2  & 1.0  & 1.8  & both \\ \hline\hline
+
+$R_{WJets\_\mu}$   & shape         & flat        & 0.2   & 1.0   & 1.8 & $\mu$+jets \\ 
+$R_{other\_\mu}$   & shape         & flat         & 0.2   & 1.0  & 1.8 & $\mu$+jets \\
+$R_{WJets\_e}$   & shape         & flat        & 0.2   & 1.0   & 1.8 & e+jets \\ 
+$R_{other\_e}$   & shape         & flat         & 0.2   & 1.0  & 1.8 & e+jets \\
+$R_{QCD\_e}$     & rate         & log-normal         & 0.8   & 1.0  & 1.2 & e+jets \\
+Lumi          & rate          & log-normal      & -0.045 & 0.0   & 0.045 & both\\
+Systematics   & shape         & Gauss      & -1$\sigma$ & 0.0 & 1$\sigma$  & depends \\ \hline\hline
+\end{tabular}
+\caption{Type and prior for all parameters. Flat prior means uniform prior distribution. Gauss prior means the prior distribution is a Normal distribution with $\mu=0$,$\sigma=1$. For nuisance parameters associated with shape based systematic uncertainties, we assume the up/down templates correspond to $1 \sigma$ away from nominal values in the prior distributions. The up/down value for $R_process$ is relative to the nominal value. The corresponding templates are produced according to Eq.~\ref{eq:SF_qq} and \ref{eq:SF_bkg} }
+\label{table:priors}
+\end{table}
+
+\clearpage
+\section{Corrections and Systematic Uncertainties}
+\label{sec:corrections}
+
+The CMSSW simulation does not account for a number of known detector and experimental effects.  Standard CMS correction factors are applied to the simulated events to compensate for those deficiencies. In addition, there are uncertainties associated with theoretical models underling the event generation in both matrix element and parton showering stage. In this section we describe various corrections and associated systematic uncertainties related to our analysis.
+
+\subsection{Experimental Uncertainties}
+% Lumi, JES/JER, PU, Lepton Eff SF, B-tagging, QCD_norm, MC sys
+
+\subsubsection{Jet Energy Scale}
+Jet energy scales are a set of scale factors that correct the 4-momentum of jets reconstructed from CMS detector response to the particle level jet momentum. The corrections are applied sequentially in different stages which handles different aspects. The L1 Pile-up correction removes energy coming from pile-up events and is applied to both Data and MC. L2/L3 MC-truth correction correct the $p_T$ and $\eta$ of reconstructed jets to the particle level ones, applied to both Data and MC as well. Finally, L2/L3 residual corrections handles the difference in jets between MC and data.  
+
+%https://twiki.cern.ch/twiki/bin/view/CMS/JECUncertaintySources#Main_uncertainties_2012_53X
+We then estimate the systematic uncertainty by adjusting the jet energy scale factor depend on the $p_T$ and $\eta$ of jet. The amount of change in JES is according to the recommendation of JetMET PAG based on 20 $fb^{-1}$ of 2012 8 TeV Re-Reco Data \cite{JES_uncertainty} and listed in the following file.
+\begin{itemize}
+\item Winter14\_V5\_DATA\_Uncertainty\_AK5PFchs.txt
+\end{itemize}
+
+% new edit
+The templates corresponding to $\pm 1\sigma$ from nominal value of JES for $gg\rightarrow t\bar{t}\rightarrow \mu+jets$ are shown below in Fig.\ref{fig:gg_JES_templates}. It can be seen that JES changes both the normalization and shape of this template. It turned out that JES is one of the dominate systematic uncertainties.
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{mu/f_comb__gg__JES__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{mu/f_comb__gg__JES__mtt_sys}
+    \includegraphics[width=0.49\linewidth]{mu/f_comb__gg__JES__xf_sys}
+
+  \caption{\small The distribution of MC simulated $gg\/qg\rightarrow t\bar{t}\rightarrow \mu+jets$ events with $SF_{JES} = -1\sigma$ (blue), 0 (black) and $+1\sigma$ (red)}
+    \label{fig:gg_JES_templates}
+  \end{center}
+\end{figure}
+
+
+\subsubsection{Jet Energy Resolution}
+% Official Recommendations:  https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution
+% code: https://github.com/lfeng7/diffmo/blob/semilep_AFB/Ntuplizer/plugins/jhu_hadHelper.h#L371
+% code: https://github.com/lfeng7/diffmo/blob/semilep_AFB/Ntuplizer/plugins/smfaclookup.h
+Measurements show that the jet energy resolution (JER) in data is worse than in the simulation and the jets in MC need to be smeared to describe the data. We use scaling method to correct the transverse momentum of a reconstructed jet, $p_T$, by a facor $w_{JER}$, defined below:
+\begin{equation}
+w_{JER}=1+(SF_{JER}-1)\frac{p_T-p_T ^{ptcl}}{p_T}
+\end{equation}
+where $p_T ^{ptcl}$ is the transverse momentum of jet clustered from generator-level particles, and $s_{\texttt{JER}}$ is the scale factor measured from data and MC comparison which is recommended by the JetMET POG\cite{JER_wiki} and listed Table.[\ref{tab:JER_SF}]
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|cccc|}
+\hline
+$|\eta|$ range	 & down 		& central 	 &  up              \\ \hline
+0.0-0.5     		 &  1.053       & 1.079   & 1.105             \\
+0.5-1.1 	         &  1.071       & 1.099   & 1.127             \\ 
+1.1-1.7          &  1.092       & 1.121   & 1.150              \\ 
+1.7-2.3          &  1.162        & 1.208  & 1.254             \\
+2.3-2.8          &  1.192       & 1.254   & 1.316              \\  \hline 
+\end{tabular}
+\caption{ Jet Energy Resolution scale factors and uncertainties for different $|\eta|$ range. }
+\label{tab:JER_SF}
+\end{table}
+
+We evaluated the systematic by adjusting $SF_{JER}$ up and down as listed above to produce two more versions of templates for each MC sample. The effect of the JER and JES systematic on $t\bar{t}$ templates are also shown below.
+
+% new edit
+The templates corresponding to $\pm 1\sigma$ from nominal value of JES for $gg\rightarrow t\bar{t}\rightarrow \mu+jets$ are shown below in Fig.\ref{fig:gg_JER_templates}. It can be seen that JES changes the shape of this template, especially on $c^*$ and $M_{t\bar{t}}$ distributions.
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{mu/f_comb__gg__JER__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{mu/f_comb__gg__JER__mtt_sys}
+    \includegraphics[width=0.49\linewidth]{mu/f_comb__gg__JER__xf_sys}
+
+  \caption{\small The distribution of MC simulated $gg/qg\rightarrow t\bar{t}\rightarrow \mu+jets$ events with $w_{JER}$= $-1\sigma$ (blue), 0 (black) and $+1\sigma$ (red)}
+    \label{fig:gg_JER_templates}
+  \end{center}
+\end{figure}
+
+
+
+\subsubsection{Pileup Reweighting}
+% https://twiki.cern.ch/twiki/bin/view/CMS/PileupSystematicErrors
+
+All simulated samples are reweighted to reflect the distribution of pileup events observed in data by applying a scale factor that depends upon the number of reconstructed pileup events. The scale factor is calculated for each bin by dividing the estimated number of true interactions in the 2012 dataset by the number of true interactions in the simulated samples. Pileup estimates for data are obtained from the pileup JSON file provided by the Physics Validation Team after taking into account the appropriate HLT path as described on the Pileup Reweighting TWiki \cite{pileup_reweighting_twiki}. The number of true interactions in simulation is shown on the left-hand side of Fig.~\ref{fig:MC_and_data_pileup} and the number of measured interactions in data is shown on the right-hand side, illustrating the discrepancy.
+
+% new plots
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.51\linewidth]{other/data_PU_plot}  
+    \includegraphics[width=0.49\linewidth]{mu/PU_init_uncor_mu}
+    \includegraphics[width=0.49\linewidth]{mu/PU_init_cor_mu}
+  \caption{\small The distribution of simulated primary interactions in MC simulated $t\bar{t}\rightarrow \mu +jets$ events before applying PU reweighting (bottom left) and after reweighting (bottom right). The reference PU distribution from 2012 collision data in the top middle showing the discrepancy intended to be corrected for. }
+    \label{fig:MC_and_data_pileup}
+  \end{center}
+\end{figure}
+
+The effect of applying the reweighting brings the two measured pileup distributions much closer into agreement as illustrated in Fig.~\ref{fig:pileup_comparison}, which shows pileup in both simulation and data after reweighting where the signal and background simulations have all been scaled according to their luminosities and cross sections, and the total distribution normalized to the data.
+
+% new plots
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{mu/PU_uncorr_mu}
+    \includegraphics[width=0.49\linewidth]{mu/PU_corr_mu}
+    \includegraphics[width=0.49\linewidth]{el/PU_uncorr_el}
+    \includegraphics[width=0.49\linewidth]{el/PU_corr_el}
+  \caption{\small Measured pileup in simulation and data before reweighting (left) and after reweighting (right). The signal and background samples have been rescaled according to their luminosities and cross sections, and the entire distribution has been normalized to data. The simulated samples are pictured as stacked filled histograms, and the data are pictured as blue data points. The figures at top are from $\mu$+jets channel, and bottom are e+jets channel}
+    \label{fig:pileup_comparison}
+  \end{center}
+\end{figure}
+
+The systematic uncertainty associated with PU re-weighting mainly originate from the uncertainty of total cross-section of min-bias events as well as luminosity of bunch crossing. As recommended by the PVT POG, we apply 5\% uncertainty on the number of primary interactions of data to produce up and down weights for PU. Use the new weights we get the PU systematic templates for the fit. 
+
+We have not include PU systematic yet and will added to the table soon.
+
+\subsubsection{b-tagging Efficiency}
+% https://twiki.cern.ch/twiki/bin/viewauth/CMS/BTagSFMethods#1a_Event_reweighting_using_scale
+In our event selection a jet is tagged as a b jet if it passes a cut on its CSV discriminator value. However, the efficiency for a real b-jet to be tagged as a b quark is different in simulation and data, and so is the probability for a non-b jet to be misidentified as a b quark. A scale factor is applied to simulated events to correct for this discrepancy. The correction was done following the recommendation of BTEV POG \cite{Btag_POG}, using the method 1(a).
+
+The scale factor (SF) is defined as the ratio of b-tagging efficiency for data and  MC. It is a function of jet flavor, $p_{T}$ and $\eta$. The b-tagging efficiency for a jet of flavor f and in the $(p_{T},\eta)$ bin of $(i,j)$ is defined as follows:
+\begin{equation}
+\varepsilon_{f} (i,j)=\frac{N_{f}^{b-tagged}(i,j)}{N_{f}^{total}(i,j)}
+\end{equation}
+Note here the b-tagging efficiency can be different for each MC sample. The weight that is applied for each event is then chosen as $w = \frac{P(data)}{P(MC)}$ where the probability of a given event in the MC distribution is
+\begin{equation}
+P(MC)=\prod_{i=tagged}\varepsilon _{i}\prod_{j=not\: tagged}(1-\varepsilon_{j})
+\end{equation}
+And the corrected probability for the distribution in data is
+\begin{equation}
+P(data)=\prod_{i=tagged}SF_{i}\varepsilon _{i}\prod_{j=not\: tagged}(1-SF_{j}\varepsilon_{j})
+\end{equation}
+
+
+\subsubsection{Muon Tracking Efficiency}
+
+A tracking efficiency correction for muons is applied as an $\eta$-dependent scale factor. These scale factors are provided by the Tracking POG \cite{tracking_POG}.
+
+\subsubsection{Muon Trigger, ID, and Isolation Efficiencies}
+
+Muon trigger, ID, and isolation efficiences are corrected for by applying three scale factors, each dependent on the reconstructed number of primary vertices in the event as well as muon $\eta$ and $p_T$. These scale factors are provided by the Muon POG, and the procedure used is dicussed in detail on the twiki page for muon ID and isolation efficiencies \cite{muon_eff_twiki}.
+
+\subsubsection{Electron ID Efficiency}
+% https://twiki.cern.ch/twiki/bin/view/Main/EGammaScaleFactors2012#2012_8_TeV_Jan22_Re_recoed_data
+We applied scale factors to correct the difference of electron cut-based ID efficiency between data and MC. The scale factors are recommended by EGamma POG\cite{Electron-ID-efficiency wiki}\cite{Electron-ID-efficiency AN} , which is measured from the following Data and MC samples using Tag-and-Probe Method:
+\begin{itemize}
+\item Data: DoubleElectron Run2012A+B
+\item MC: DYJetsToLL-MadGraph (Summer12)
+\end{itemize}
+The SF measurement select events with opposite-sign di-electron events, with one electron as tag which pass tight electron cut-based ID and matched to the one leg of the trigger, and another electron as probe. The scale factors are measured in bins of $p_T$ and $|eta|$ and is applied event by event as a weight to correct MC to Data.
+
+In systematic evaluations, we introduce a nuisance parameter with Gaussian prior distribution in the likelihood definition. The up and down templates are produced by applying the corresponding scale factors, instead of the central scale factors, for each event. 
+
+\subsubsection{Electron Trigger Efficiency}
+% https://twiki.cern.ch/twiki/bin/viewauth/CMS/KoPFAElectronTagAndProbe
+We apply SF to correct the \texttt{HLT\_Ele27\_WP80} trigger efficiency of MC to Data. The scale factors are from sources recommended on CMS Top EGamma Coordination twiki page \cite{Top-Egamma-wiki}. It is measured by comparing MC simulation to 22Jan2013 ReReco Data, using tag and probe method\cite{Electron-Trigger-Efficiency wiki}\cite{Electron-Trigger-Efficiency AN}. The samples for the SF measurement is listed below:
+\begin{itemize}
+\item Data : \texttt{/SingleElectron/Run2012*-22Jan2013/AOD}
+\item MC : \texttt{/DYJetsToLL\_M-50\_TuneZ2Star\_8TeV-madgraph-tarball \\
+           /Summer12\_DR53X-PU\_S10\_START53\_V7A-v1/AODSIM}
+\end{itemize}
+
+Similarly to Electron ID efficiency SF discussed above, we applied trigger efficiency correction to MC and introduce a nuisance parameter in systematic evaluations. 
+
+
+\subsubsection{QCD Modeling and Background Composition}
+
+Due to the high cross section and wide variety of event types resulting from multijet QCD processes, Monte Carlo simulations cannot be generated with sufficient luminosity to provide a reasonable approximation of this background shape. Therefore a data-driven method has been implemented to estimate the shape of the QCD background.
+
+The nature of the method is to build template distributions from each of the existing simulated samples (both signal and background) in a sideband of the lepton isolation variable. The sideband used for muons is $0.13<\mathrm{PF}_\mathrm{iso}/p_{T}<0.20$ and the sideband used for electrons is defined as  $0.2<\mathrm{PF}_\mathrm{iso}/p_{T}<1.2$. These sideband regions are inversions of the lepton selection cuts and are designed to provide a sample enriched with multijet QCD events.
+
+In the muon+jets channel with Run2012A-D data, it was found that only 485 events were selected in the lepton isolation sideband. Additionally, all of these events could be accounted for by the events selected from the existing signal and background simulations, indicating that QCD multijet contribution to the background is negligible in this channel. So for muon+jets channel we do not consider QCD multijets background.
+
+On the other hand, QCD multijets process is not negligible for $e+jets$ channel. So we estimate the distribution of QCD process by using the distribution of observed data events in the lepton selection sideband region. This is assuming the distribution of QCD events is similar regardless of if the fake electron is isolated or non-isolated. In addition, we estimate the event rate for QCD process in signal region by using ABCD method, including the uncertainty of this estimation. We then introduce a nuisance parameter $R_{QCD}$ with a log-normal prior, so the data-driven QCD background can be scaled. The width of the prior distribution of $R_{QCD}$ is chosen as the percentage uncertainty estimated from ABCD method. 
+
+The QCD multijet background process modeling is described in more details in Appendix.[\ref{sec:data driven qcd}]
+
+\subsection{Theoretical Uncertainties}
+% PDF, top pT reweighting
+
+\subsubsection{Top $p_{T}$ Reweighting}
+
+The normalized differential top-quark-pair cross section analysis in the CMS Top Group found a persistent inconsistency between the shapes of the individual top-quark $p_{T}$ distributions in simulation and data, while the NNLO approximated calculation \cite{Kidonakis2012} provides a reasonable description \cite{pT_reweighting_TWiki}. Therefore an individual top-quark $p_{T}$ dependent event scale factor has been derived to correct this shape. The scale factors recommended for use with 8TeV data for lepton plus jets events are 
+\begin{equation}
+\mathrm{weight} = \sqrt{e^{0.318-0.00141(p_{T_{t}}+p_{T_{\bar{t}}})}}
+\end{equation}
+
+Here $p_{T_t}$ and $p_{T_{\bar t}}$ are the generator-level transverse momenta of the individual top- and antitop-quarks respectively. Note that the application of this event scale factor does not conserve the $t\bar{t}$ cross section and this change in total cross section must be removed when renormalizing the $t\bar{t}$ samples by luminosity and cross section to derive expectations of $R_\mathrm{bk}$ and $R_{q\bar q}$. More details about the reweighting procedure, its motivation and investigation, and its application to samples of 7 TeV data can be found on the Top Quark Group's TWiki page \cite{pT_reweighting_TWiki}. The value of this event scale factor for semileptonic events is pictured in Fig.~\ref{fig:top_pT_SF} as a function of $c_\mathrm{r}$, $x_\mathrm{r}$, and $M_\mathrm{r}$. It shows that top $p_T$ reweighting is correlated with $c_r$ and $M_{t\bar t}$ for $t\bar{t}$ events. As a result, applying the reweighting changes the distribution of $t\bar{t}$ events.
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.48\linewidth]{mu/xf_SF_mu}
+    \includegraphics[width=0.48\linewidth]{el/xf_SF_el}   
+    \includegraphics[width=0.48\linewidth]{mu/Mtt_SF_mu}
+    \includegraphics[width=0.48\linewidth]{el/Mtt_SF_el}
+    \includegraphics[width=0.48\linewidth]{mu/cstar_SF_mu}
+    \includegraphics[width=0.48\linewidth]{el/cstar_SF_el}
+  \caption{\small The top $p_{t}$ reweighting event scale factor as a function of $c_\mathrm{r}$ (top), $x_\mathrm{r}$ (middle), and $M_\mathrm{r}$ (bottom) for a sample of aMC@NLO simulated semileptonic $t\bar{t}$ events.  The figures at the left are from $\mu$+jets channel, at right are e+jets channel.}
+    \label{fig:top_pT_SF}
+  \end{center}
+\end{figure}
+
+In subsequent template fit we apply top $p_T$ re-weighting as a default, for our nominal fit. We estimate the systematic uncertainty associated with top $p_T$ re-weighting by measuring the difference of central fit value of $A_{FB}$ and $R_{q\bar{q}}$ with or without applying the top $p_T$ weights. We found that top $p_T$ reweighting is a dominate systematic in this measurement. 
+
+\subsubsection{MC systematics}
+
+The effect of having limited sized MC templates on the fit is discussed here. This systematic uncertainty has not been estimated yet and will be added in next version of the notes.
+
+\subsubsection{Parton Distribution Functions}
+
+We estimate the systematic uncertainty from PDF of protons by producing up/down templates based on all alternative PDF sets for each MC sample. For example, for our signal $t\bar{t}$ sample which is produced with \texttt{aMC@NLO+CTEQ66} , for every event we take the PDF weights that are maximally below ( $w_-$ ) and above ($w_+$) the value of nominal weight ($w_0$) to produce $w_{down}=\frac{w_-}{w_0}$ and $w_{up}=\frac{w_+}{w_0}$ . Then we re-weight the nominal templates using these two set of weights to produce systematic templates for PDF uncertainty. 
+
+\subsection{Evaluation method and uncertainty table}
+
+Once we have systematic templates corresponding to each of the uncertainty sources, we propagate the uncertainties to the measured parameters by taking the following approach. 
+
+As mentioned in Section.\ref{sec:fitter} for every systematic uncertainty sources we introduce a nuisance parameter with Gauss prior. The expected distribution can be interpolated from up,down and nominal templates provided. We first perform the template fit by fixing all nuisance parameters corresponding to systematics to the nominal value, only allowing other parameters to float. Then we allow each systematic nuisance parameter to float at a time, and take the difference between the new measured parameter value and nominal value as the systematic uncertainty from the respective source. Finally we add all systematic uncertainties in quadrature  as the total systematic uncertainties. 
+
+The complete table of systematic uncertainties for both parameter of interest and other important nuisance parameters are listed below, in Table.[\ref{tab:sys-full}],[\ref{tab:sys-err}]
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{c|cc|cccc}
+Systematics &      $A_{FB}$ &   $R_{q\bar{q}}$ & $R_{other\_bkg\_\mu}$ & $R_{other\_bkg\_el}$ & $R_{WJets\_\mu}$ & $R_{WJets\_el}$ \\
+\hline
+Nominal         &  0.045 &   0.12 &          0.089 &          0.101 &      0.007 &      0.011 \\
+\hline
+B-Tagging Eff.  &  0.044 &  0.119 &          0.089 &          0.101 &      0.007 &      0.011 \\
+Lepton ID Eff.  &  0.045 &   0.12 &          0.088 &          0.101 &      0.007 &      0.011 \\
+Lepton Iso Eff. &  0.045 &   0.12 &          0.089 &          0.101 &      0.007 &      0.011 \\
+Tracking Eff.   &  0.045 &   0.12 &          0.089 &          0.101 &      0.007 &      0.011 \\
+Trigger Eff.    &  0.045 &   0.12 &          0.089 &          0.101 &      0.007 &      0.011 \\
+\hline
+JES             &   0.05 &  0.114 &          0.106 &           0.12 &      0.011 &      0.014 \\
+JER             &  0.039 &  0.118 &          0.095 &          0.104 &      0.008 &      0.011 \\
+PDF             &  0.036 &   0.12 &          0.095 &          0.104 &      0.008 &      0.011 \\
+\hline
+top $p\_T$         &  0.034 &  0.108 &          0.073 &          0.084 &      0.006 &       0.01 \\
+\hline
+\end{tabular}
+\caption{Central value of all fit parameters with each type of systematic nuisance parameters turn on at a time.}
+\label{tab:sys-full}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{c|cc|cccc}
+Systematics &    $\sigma_{AFB}^{sys}$ & $\sigma_{R_{q\bar{q}}}^{sys}$ & $\sigma_{R_{other\_bkg\_\mu}}^{sys}$ & $\sigma_{R_{other\_bkg\_el}}^{sys}$ & $\sigma_{R_{WJets\_\mu}}^{sys}$ & $\sigma_{R_{WJets\_el}}^{sys}$  \\
+\hline
+B-Tagging Eff.  &   0.001 &    0.001 &                  0 &                  0 &              0 &              0 \\
+Lepton ID Eff.  &       0 &        0 &              0.001 &                  0 &              0 &              0 \\
+Lepton Iso Eff. &       0 &        0 &                  0 &                  0 &              0 &              0 \\
+Tracking Eff.   &       0 &        0 &                  0 &                  0 &              0 &              0 \\
+Trigger Eff.    &       0 &        0 &                  0 &                  0 &              0 &              0 \\
+JES             &   0.005 &    0.006 &              0.017 &              0.019 &          0.004 &          0.003 \\
+JER             &   0.006 &    0.002 &              0.006 &              0.003 &          0.001 &              0 \\
+PDF             &   0.009 &        0 &              0.006 &              0.003 &          0.001 &              0 \\
+top $p\_T$      &   0.011 &    0.012 &              0.016 &              0.017 &          0.001 &          0.001 \\
+\hline
+Total           &  0.0162 &   0.0136 &             0.0249 &             0.0258 &        0.00436 &        0.00316 \\
+\hline
+\end{tabular}
+\caption{Systematic uncertainties of fit parameters from different sources. The total is the individual sources add in quadrature. }
+\label{tab:sys-err}
+\end{table}
+
+
+\clearpage
+
+\section{Sensitivity Studies}
+\subsection{Gluon Polarization Study}
+To tune the event weighting to use the Powheg and MagGraph samples listed in Table~\ref{tab:sim_samples}, generator-level $q\bar q\to t\bar t(j)$ events are fit to a distribution function derived from equation~\ref{eq:qqnlodef},
+\begin{equation}
+f_\mathrm{gen}(\alpha;M,c_*) = \frac{1+\beta^2c_*^2+\left(1-\beta^2\right)+\alpha\left(1-\beta^2c_*^2\right)}{2\left[2-\frac{2}{3}\beta^2+\alpha\left(1-\frac{1}{3}\beta^2\right)\right]}. \label{eq:wgt_test}
+\end{equation}
+to determine best values for $\alpha$.  The Powheg fit yields the surprising value $\alpha = -0.129\pm0.010$ indicating that Powheg generates $q\bar q\to t\bar t$ events with a steeper-than-tree-level angular distribution.  The presence of real longitudinal gluon polarization would manifest itself as a positive value for $\alpha$.  Note that the effect of positive or negative $\alpha$ is accounted in the definition of $A_{FB}^{(1)}$.  The goodness of fit can be demonstrated by applying the weight $f^{-1}_\mathrm{gen}$ to each event and plotting the resulting $|c_*|$ distributions for $\alpha = 0$ and $\alpha = -0.129$ as shown in Fig.~\ref{fig:unweight_test}(a-b).  The $\alpha=0$ ``unweighting'' shows a monotonic increase of about 8\% from smallest to large $|c_*|$ bin suggesting that the generated events are more strongly peaked at large $|c_*|$ than naive tree-level expectations.  Using $\alpha = -0.130$ removes the effect and leads to a maximum bin to bin variation of 1.7\%.  To test this further, the procedure is repeated by dividing the sample into 0-(extra)jet and 1-jet subsamples.  The effect of ``negative gluon polarization'' is seen more strongly in the 0-jet sample with a best fit of $\alpha=-0.256\pm0.011$ as shown in Fig.~\ref{fig:unweight_test}(c-d).  In the 1-jet sample, the presence of real longitudinal gluon polarization increases the best fit to $\alpha=0.143\pm0.019$ and is shown in Fig.~\ref{fig:unweight_test}(e-f).  The same procedure is performed on a sample of $q\bar q \to t\bar t(j,jj,jjj)$ events generated by MadGraph5.  A similar pattern is observed but the results, summarized in Table~\ref{tab:alpha_tune}, are not identical.  The Powheg and MadGraph5 predictions for the forward-backward asymmetry are also listed in Table~\ref{tab:alpha_tune}.  It is clear that the virtual NLO corrections contained in Powheg but not MadGraph5 are large and important.
+
+ \begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.8\linewidth]{other/unweighting.pdf}
+  \caption{\small The ``unweighted'' $|c_*|$ distributions (events weighted by $f_\mathrm{gen}^{-1}$) distributions of Powheg $q\bar q\to t\bar t(j)$ events for longitudinal gluon polarizations $\alpha=0$ [(a), (c), (e)] and best fit values [(b), (d), (f)].  The distributions are shown for samples containing: all events (a-b), 0 extra jets (c-d), and 1 extra jet (e-f).}
+    \label{fig:unweight_test}
+  \end{center}
+\end{figure}
+
+\begin{table}[hbt]
+\begin{center}
+\caption{\small \label{tab:alpha_tune} The best fit values for the longitudinal gluon polarization $\alpha$ for samples of Powheg(hvq) and MadGraph5 events.  The Powheg full NLO and MadGraph5 partial NLO expectations for the t-quark forward-backward asymmetry, the residual forward-backward asymmetry of the ``gluon-gluon'' sample from $q(\bar q)$-$g$ initial states, and the accepted $q\bar q$ event fractions are also listed.  Note that the ``$gg$'' asymmetries are smaller than the $q\bar q$ asymmetries by an order of magnitude.}
+\vspace{3pt}
+\begin{tabular}{|l|cccc|cccc|}\hline
+ & \multicolumn{4}{c}{Powheg(hvq)} &  \multicolumn{4}{|c|}{MadGraph5} \\ 
+Sample    & $\alpha$      &  $A_{FB}$      & $A_{FB}^{gg}$ &  $R_{q\bar q}$ &  $\alpha$    &  $A_{FB}$      & $A_{FB}^{gg}$ &  $R_{q\bar q}$ \\ \hline
+All evts  & $-0.129(10)$  & $+0.0356(15)$  & $+0.0058(11)$ & 0.066          & $-0.173(7)$  & $-0.0283(27)$  & $-0.0026(11)$ & 0.093          \\ 
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+We can also fit for $\alpha$ as a parameter that dependent on $t\bar t$ invariant mass \cite{AFB-13Tev-AN}. This allows for a more accurate description of the gluon longitudinal polarization based on the NLO MC simulation. We performed a binned likelihood fit of $c*$ distribution for simulated $q\bar q \rightarrow t \bar t$ events before any selection is applied. We divide simulated events by the range of $\beta$, and fit these events to get $\beta$ dependent $\alpha$ values. We then use the $\alpha$ acquired this way to make the asymmetric templates $f_{qa}$ as described in Eq.[\ref{eq:template_schemeone}]. 
+
+The fit distribution and comparison to NLO MC simulated distributions are shown in Fig.[\ref{fig:alpha_fit}]. All the simulations are generated with proton-proton $\sqrt{s}=$ 13 TeV in the figures. 
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{other/total_alpha_canv_amcnlo}
+    \includegraphics[width=0.49\linewidth]{other/total_alpha_canv_powheg}
+  \caption{\small Fit comparison of $c*$ for simulated $q\bar q \rightarrow t \bar t$ events generated by aMC@NLO (left) and Powheg (right) generators.The best fit values for $\alpha$ are shown in the legend. Simulation distribution is shown as cross, while best fit distribution is shown as solid lines. }
+    \label{fig:alpha_fit}
+  \end{center}
+\end{figure}
+
+
+\subsection{Closure Test}
+
+The statistical power of the technique was investigated by simulating and fitting 2000 pseudo experiments of similar number of events in Data. We scan over a range of values of $A_{FB}$ and $R_{q \bar q}$, for every parameter value we generate 2000 pseudo experiments based on the statistical model described in Eq.\ref{eq:theta_exp_evts}, then fit the pseudo experiment with the same templates that generate pseudo-data. We than estimate the mean and spread of the fit results of all experiment by fitting with a Gaussian distribution. 
+
+From the mean and standard deviation of fit value corresponding to every input value of parameters, we construct a Neyman band, which we use to extrapolate the confidence interval given the fit value of parameters from Data fit. We take the half of $68\%$ confidence interval as the statistical uncertainty of the template fit, which is indicated as dashed red lines in Fig.[\ref{fig:neyman}], The estimated statistical uncertainties are listed below:
+
+\begin{itemize}
+
+\item $\sigma_{A_{FB}} = 0.50$
+\item $\sigma_{R_{q\bar q}} = 0.006$
+\end{itemize}
+
+An example distribution of pseudo experiments fit results for $A_{FB}$ and $R_{q\bar{q}}$ is shown in Fig.[\ref{fig:pseudo-ex}]. The Neyman construction is shown in Fig.[\ref{fig:neyman}]. From these plots we find the template fit has very small bias and the confidence interval extrapolated this way is close to the statistical uncertainty we get from THETA. 
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{other/AFB_Neyman}
+    \includegraphics[width=0.49\linewidth]{other/R_qq_Neyman}
+  \caption{\small Neyman construction for $A_{FB}$(left) and $R_{q\bar q}$ (right). The dashed red line indicate the extrapolated fit result and the $\pm 1 \sigma$ value given the measured value. }
+    \label{fig:neyman}
+  \end{center}
+\end{figure}
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{other/pull_AFB_plus7pct}
+    \includegraphics[width=0.49\linewidth]{other/pull_R_qq_minus7pct}
+  \caption{\small Fit parameter distribution of 2000 pseudo experiments for $A_{FB}$(left) and $R_{q\bar q}$ (right).}
+    \label{fig:pseudo-ex}
+  \end{center}
+\end{figure}
+
+
+\clearpage
+\section{Result}
+\label{sec:results}
+
+The result of measuring $A_{FB}$ and $R_{q\bar{q}}$ from 19.6 $fb^{-1}$ of 8 TeV proton-proton collision data collected by CMS experiment in 2012 is given below. It is based on the binned likelihood fit of MC simulated templates ( and Data driven QCD multijets template for e+jets ) to 45321/42923 mu+jets/el+jets data events. 
+\begin{itemize}
+\item $ A_{FB} = 0.045  \pm 0.050 \, (stat) \pm 0.016 \, (sys)$
+
+\item $ R_{q\bar{q}} = 0.120  \pm 0.006 \, (stat) \pm 0.014 \, (sys) $
+\end{itemize}
+
+
+The expected distribution of observed data events for the best fit is compared with actual observed data in the figures below. Fig.[\ref{fig:postfit combined}] shows the combined event distribution, by summing over $e+jets$ and $\mu+jets$ channels and over lepton charge types. The Fig[\ref{fig:postfit c*}] - Fig.[\ref{fig:postfit mtt}] shows the individual post fit comparisons for all four observable, which are fit simuteneusly as described in Section.[\ref{sec:lepton combination}]. The fit agrees with data reasonably well. 
+
+In order to compare to the expected values of $A_{FB}$ and $R_{q\bar{q}}$ suggested by NLO simulation, we fit the pseudo data events which is the combination of MC simulated events. The same MC that is used for building the templates are taken to form the pseudo data. These MC samples are normalized to the same integrated luminosity of analyzed data. The fit central value and statistical uncertainty are also listed in the Table.\ref{tab:result_ref}.
+
+We found that the measured $A_{FB}$ and $R_{q\bar{q}}$ are consistent with the expected values from NLO MC simulations. We note that just by simple counting definition of $A_{FB}$, we found $A_{FB}=-0.02$ using the generated $c*$ for $q\bar{q}\rightarrow t\bar t$ events from our signal MC samples. So we actually managed to extract this value with our template fit. On the other hand, this suggest our signal MC samples, which is generated using aMC@NLO may not be accurate enough to describe $A_{FB}$ from SM theory.
+
+We also compared our measurement with the result of both D0 and CDF experiments of Tevatron, which are the measurement of $A_{FB}$ of $e/\mu$+jets channel combined based on full Tevatron Data of proton anti-proton collision at 1.96 TeV. Our results are consistent with the result of Tevatron \cite{d0,CDF2016}, and we get competitive uncertainty on $A_{FB}$ despite significant dilution from $gg$ initiated $t\bar{t}$ events. 
+
+Finally we compared to the NNLO SM calculation \cite{Czakon:2014xsa}, which is consistent with our measurement as well. 
+
+In conclusion, we measured the Forward-Backward Asymmetry of $q\bar q\rightarrow t\bar t$ process using the $l+4/5jets$ events from 8 TeV proton-proton collision in LHC, collected by CMS during 2012. We are able to measure $A_{FB}$ with good accuracy, and found the result to be consistent from NNLO QCD calculation as well as the latest results from D0 and CDF experiments in Tevatron. In addition, we managed to measure the fraction of $q\bar{q}$ initiated $t\bar{t}$ events , which is interesting in its own.
+
+
+
+\begin{table}[hbt]
+\begin{center}
+\begin{tabular}{c|cccc}\hline
+Parameter                 & Simulation   & Tevatron & SM Theory  \\
+\hline
+$A_{FB}$					  & $-0.018 \pm 0.052 $  & 0.106 $\pm$ 0.03 (D0), 0.164$\pm$0.047 (CDF)  &  0.095 $\pm$ 0.007\\
+$R_{q\bar{q}}$			  & $ 0.132 \pm 0.015 $  & NA & ?? \\
+\end{tabular}
+\end{center}
+\label{tab:result_ref}
+\caption{Result of template fit to single muon data using 2012 8 TeV Data collected by CMS.  The expected value of parameters are from template fit to MC simulations. }
+\end{table}
+
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{postfit/lep_combo_x}
+    \includegraphics[width=0.49\linewidth]{postfit/lep_combo_y}
+    \includegraphics[width=0.49\linewidth]{postfit/lep_combo_z}
+  \caption{\small Postfit plots of lepton and charge combined template after the fit (colored) and data (solid dots with error bar). All errors, including the shaded band in the Data/MC comparison plots, indicate Poisson error only.}
+    \label{fig:postfit combined}
+  \end{center}
+\end{figure}
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{postfit/el_f_minus_x}
+    \includegraphics[width=0.49\linewidth]{postfit/el_f_plus_x}
+    \includegraphics[width=0.49\linewidth]{postfit/mu_f_minus_x}
+    \includegraphics[width=0.49\linewidth]{postfit/mu_f_plus_x}
+  \caption{\small $c*$ projection of post-fit distribution of all four observable, as labeled in the figures. All errors, including the shaded band in the Data/MC comparison plots, indicate Poisson error only.}
+    \label{fig:postfit c*}
+  \end{center}
+\end{figure}
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{postfit/el_f_minus_y}
+    \includegraphics[width=0.49\linewidth]{postfit/el_f_plus_y}
+    \includegraphics[width=0.49\linewidth]{postfit/mu_f_minus_y}
+    \includegraphics[width=0.49\linewidth]{postfit/mu_f_plus_y}
+  \caption{\small $|x_F|$ projection of post-fit distribution of all four observable, as labeled in the figures.All errors, including the shaded band in the Data/MC comparison plots, indicate Poisson error only.}
+    \label{fig:postfit xf}
+  \end{center}
+\end{figure}
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{postfit/el_f_minus_z}
+    \includegraphics[width=0.49\linewidth]{postfit/el_f_plus_z}
+    \includegraphics[width=0.49\linewidth]{postfit/mu_f_minus_z}
+    \includegraphics[width=0.49\linewidth]{postfit/mu_f_plus_z}
+  \caption{\small $M_{t\bar t}$ projection of post-fit distribution of all four observable, as labeled in the figures.All errors, including the shaded band in the Data/MC comparison plots, indicate Poisson error only.}
+    \label{fig:postfit mtt}
+  \end{center}
+\end{figure}
+
+
+%\begin{figure}[hbt]
+%  \begin{center}
+%    \resizebox{!}{5cm}{\includegraphics{Combining_Probabilities_fig1.eps}}
+%  \caption{\small (a) The definition of the $\alpha_2$ region in the space of the independent random variables $x$ and $y$.  (b) The definition of the constant $\alpha_2$ contour.  (c) The integration region used to define the new tail probability $\beta_2$.}
+%    \label{fig:defs}
+%  \end{center}
+%\end{figure}
+\clearpage
+
+\addcontentsline{toc}{section}{References}
+
+\begin{thebibliography}{9}
+
+  \bibitem {cdf}The CDF Collaboration, T. Aaltonen et. al., ``Evidence for a Mass Dependent Forward- Backward Asymmetry in Top Quark Pair Production'', arXiv:1101.0034.
+  \bibitem {d0} D0 Collaboration Collaboration, V. Abazov et. al., ``First measurement of the forward- backward charge asymmetry in top quark pair production'', Phys.Rev.Lett. 100 (2008) 142002, [arXiv:0712.0851].
+ %\cite{Kuhn:1998kw}
+\bibitem{Kuhn:1998kw} 
+  J.~H.~Kuhn and G.~Rodrigo,
+  ``Charge asymmetry of heavy quarks at hadron colliders,''
+  Phys.\ Rev.\ D {\bf 59}, 054017 (1999)
+  [hep-ph/9807420].
+  %%CITATION = HEP-PH/9807420;%%
+  %217 citations counted in INSPIRE as of 29 Jan 2014
+  
+\bibitem {CDF2016} CDF Collaboration, T. Aaltonen et. al., ``Measurement of the forward\char21{}backward asymmetry of top-quark and antiquark pairs using the full CDF Run II data set'', 10.1103/PhysRevD.93.112005 (2016) \url{https://link.aps.org/doi/10.1103/PhysRevD.93.112005}
+ 
+  
+%\cite{Kuhn:2011ri}
+\bibitem{Kuhn:2011ri} 
+  J.~H.~Kuhn and G.~Rodrigo,
+  ``Charge asymmetries of top quarks at hadron colliders revisited,''
+  JHEP {\bf 1201}, 063 (2012)
+  [arXiv:1109.6830 [hep-ph]].
+ %\cite{AguilarSaavedra:2012rx}
+\bibitem{AguilarSaavedra:2012rx} 
+  J.~A.~Aguilar-Saavedra, W.~Bernreuther and Z.~G.~Si,
+  ``Collider-independent top quark forward-backward asymmetries: standard model predictions,''
+  Phys.\ Rev.\ D {\bf 86}, 115020 (2012)
+  [arXiv:1209.6352 [hep-ph]].
+  
+%\cite{Abazov:2014cca}
+\bibitem{Abazov:2014cca} 
+  V.~M.~Abazov {\it et al.}  [D0 Collaboration],
+  ``Measurement of the forward-backward asymmetry in top quark-antiquark production in ppbar collisions using the lepton+jets channel,''
+  arXiv:1405.0421 [hep-ex].
+  %%CITATION = ARXIV:1405.0421;%%
+  %11 citations counted in INSPIRE as of 13 Sep 2014
+
+  \bibitem{Kidonakis2012} 
+  N.~Kidonakis,
+  ``NNLL threshold resummation for top-pair and single-top production,''
+  arXiv:1210.7813 [hep-ph].
+  
+\bibitem{ATLAS_measurement} The ATLAS Collaboration, Eur. Phys. J. C \textbf{72}, (2012) 2039 [arXiv:1203.4211v2 [hep-ex]].
+   
+ \bibitem{CMS_measurement} CMS Collaboration, Phys. Lett. B \textbf{709} (2012) 28.
+%\cite{Chatrchyan:2014yta}
+\bibitem{Chatrchyan:2014yta} 
+  S.~Chatrchyan {\it et al.}  [CMS Collaboration],
+  ``Measurements of the $t\bar{t}$ charge asymmetry using the dilepton decay channel in pp collisions at $\sqrt{s} =$ 7 TeV,''
+  JHEP {\bf 1404}, 191 (2014)
+  [arXiv:1402.3803 [hep-ex]].
+  %%CITATION = ARXIV:1402.3803;%%
+  %3 citations counted in INSPIRE as of 03 Jun 2014
+  \bibitem{ac_pas}
+  CMS PAS TOP-13-013, CMS AN-13-087.
+%\cite{Collins:1977iv}
+\bibitem{Collins:1977iv} 
+  J.~C.~Collins and D.~E.~Soper,
+  ``Angular Distribution of Dileptons in High-Energy Hadron Collisions,''
+  Phys.\ Rev.\ D {\bf 16}, 2219 (1977).
+  %%CITATION = PHRVA,D16,2219;%%
+  %537 citations counted in INSPIRE as of 14 Feb 2014
+   \bibitem{Cao:2010zb} 
+  Q.~-H.~Cao, D.~McKeen, J.~L.~Rosner, G.~Shaughnessy and C.~E.~M.~Wagner,
+  ``Forward-Backward Asymmetry of Top Quark Pair Production,''
+  Phys.\ Rev.\ D {\bf 81}, 114004 (2010)
+  [arXiv:1003.3461 [hep-ph]].
+  %%CITATION = ARXIV:1003.3461;%%
+  %128 citations counted in INSPIRE as of 07 Jun 2013
+  \bibitem{Gresham:2011pa} 
+  M.~I.~Gresham, I.~-W.~Kim and K.~M.~Zurek,
+  ``On Models of New Physics for the Tevatron Top $A_{FB}$,''
+  Phys.\ Rev.\ D {\bf 83}, 114027 (2011)
+  [arXiv:1103.3501 [hep-ph]].
+  %%CITATION = ARXIV:1103.3501;%%
+  %82 citations counted in INSPIRE as of 07 Jun 2013
+  
+% Newly add reference
+
+\bibitem{muller2010theta} 
+M{\"u}ller, Thomas and Ott, Jochen and Wagner-Kuhr, Jeannine,
+''Theta—A framework for template based modelling and inference''
+CMS Internal Note CMS-IN 2010-17
+
+\bibitem{top_selection} TOP Reference Selections and Recommendations (Run1) \url{https://twiki.cern.ch/twiki/bin/view/CMS/TopEventSelectionRun1}
+\bibitem{electron_cut_based_ID} EGamma simple cut based electron ID \url{ https://twiki.cern.ch/twiki/bin/view/CMS/EgammaCutBasedIdentification#Electron_ID_Working_Points}
+\bibitem{JEC_intro} Introduction to Jet Energy Corrections at CMS. \url{ https://twiki.cern.ch/twiki/bin/view/CMS/IntroToJEC#Mandatory_Jet_Energy_Corrections}
+\bibitem{JES_uncertainty} Jet energy scale uncertainty sources. \url{ https://twiki.cern.ch/twiki/bin/viewauth/CMS/JECUncertaintySources#Main_uncertainties_2012_53X}
+
+%\cite{Khachatryan:2016kdb}
+\bibitem{JEC_paper} 
+  V.~Khachatryan {\it et al.} [CMS Collaboration],
+  %``Jet energy scale and resolution in the CMS experiment in pp collisions at 8 TeV,''
+  JINST {\bf 12}, no. 02, P02014 (2017)
+  doi:10.1088/1748-0221/12/02/P02014
+  [arXiv:1607.03663 [hep-ex]].
+  %%CITATION = doi:10.1088/1748-0221/12/02/P02014;%%
+  %136 citations counted in INSPIRE as of 14 Nov 2017
+  
+\bibitem{JER_wiki} Jet Energy Resolution.\url{ https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution}
+% cite electron ID efficiency
+\bibitem{Electron-ID-efficiency wiki} Single Electron efficiencies and Scale-Factors for cut based Id - 2012. \url{ https://twiki.cern.ch/twiki/bin/view/Main/EGammaScaleFactors2012#2012_8_TeV_Jan22_Re_recoed_data}
+\bibitem{Electron-ID-efficiency AN} A study of efficiencies and scale factors for cut-based electron identification at CMS experiment using data from proton-proton collisions at √s =8 TeV.
+\url{http://cms.cern.ch/iCMS/jsp/openfile.jsp?tp=draft&files=AN2014_055_v1.pdf}
+% single electron trigger efficiency
+\bibitem{Top-Egamma-wiki} CMS Top EGamma Coordination (Run1). \url{https://twiki.cern.ch/twiki/bin/view/CMS/TopEGMRun1}
+\bibitem{Electron-Trigger-Efficiency wiki} Electron efficiency for top quark analysis. \url{https://twiki.cern.ch/twiki/bin/viewauth/CMS/KoPFAElectronTagAndProbe}
+\bibitem{Electron-Trigger-Efficiency AN} Electron Efficiency Measurement for Top Quark Physics at √s = 8 TeV. \url{ http://cms.cern.ch/iCMS/jsp/openfile.jsp?tp=draft&files=AN2012_429_v4.pdf}
+
+% Nick's note
+\bibitem{AFB-13Tev-AN} 
+Nick Eminizer, Lei Feng, and Morris Swartz
+"Template measurement of the $t\bar t$ forward-backward asymmetry AFB and anomalous chromoelectric and chromomagnetic moments in the semileptonic channel at $\sqrt{s}$ = 13 TeV" 
+CMS-AN-2017-123
+\url{http://cms.cern.ch:80/iCMS/jsp/openfile.jsp?tp=draft&files=AN2017_123_v4.pdf}
+
+    
+ \bibitem{pileup_reweighting_twiki} CMS Pileup Information For Data TWiki, https://twiki.cern.ch/twiki/bin/viewauth/CMS/PileupJSONFileforData.
+ \bibitem{B2G_twiki} CMS B2G CMSSW 53x TWiki, https://twiki.cern.ch/twiki/bin/viewauth/CMS/B2GTopLikeBSM53X.
+ \bibitem{Muon_POG} CMS Muon POG TWiki, https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId.
+ \bibitem{tracking_POG} CMS Tracking POG TWiki, https://twiki.cern.ch/twiki/bin/viewauth/CMS/TrackerWikiHome.
+ \bibitem{muon_eff_twiki} CMS Reference Muon ID and Isolation Efficiency TWiki, https://twiki.cern.ch/twiki/bin/viewauth/CMS/MuonReferenceEffs.
+ \bibitem{JetMET_POG} CMS JetMET POG TWiki, https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution.
+ \bibitem{template_builder} TemplateBuilder GitHub repository, https://github.com/jbsauvan/TemplateBuilder.
+ \bibitem{pT_reweighting_TWiki} CMS Top Quark Group TWiki, ``pt(top-quark) based reweighting of ttbar MC", https://twiki.cern.ch/twiki/bin/viewauth/CMS/TopPtReweighting.
+ \bibitem{Btag_POG} CMS Btag POG TWiki, ``Recommendation for Using b-tag Objects in Physics Analyses", https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation.
+ \bibitem{CSV_note} C. Weiser, ``A Combined Secondary Vertex Based B-Tagging Algorithm in CMS,'' CMS internal analysis note, (2006).
+ %\cite{Forte:2013wc}
+\bibitem{Forte:2013wc} 
+  S.~Forte and G.~Watt,
+  ``Progress in the Determination of the Partonic Structure of the Proton,''
+  Ann.\ Rev.\ Nucl.\ Part.\ Sci.\  {\bf 63}, 291 (2013)
+  [arXiv:1301.6754 [hep-ph]].
+  %%CITATION = ARXIV:1301.6754;%%
+  %38 citations counted in INSPIRE as of 26 May 2014
+%\cite{Gluck:2007ck}
+\bibitem{Gluck:2007ck} 
+  M.~Gluck, P.~Jimenez-Delgado and E.~Reya,
+  ``Dynamical parton distributions of the nucleon and very small-x physics,''
+  Eur.\ Phys.\ J.\ C {\bf 53}, 355 (2008)
+  [arXiv:0709.0614 [hep-ph]].
+  %%CITATION = ARXIV:0709.0614;%%
+  %166 citations counted in INSPIRE as of 27 May 2014
+  %\cite{Botje:2011sn}
+\bibitem{Botje:2011sn} 
+  M.~Botje, J.~Butterworth, A.~Cooper-Sarkar, A.~de Roeck, J.~Feltesse, S.~Forte, A.~Glazov and J.~Huston {\it et al.},
+  ``The PDF4LHC Working Group Interim Recommendations,''
+  arXiv:1101.0538 [hep-ph].
+  %%CITATION = ARXIV:1101.0538;%%
+  %379 citations counted in INSPIRE as of 04 Jun 2014
+\bibitem{W_helicity_an} 
+  CMS AN-13-248
+
+%\cite{Czakon:2014xsa}
+\bibitem{Czakon:2014xsa} 
+  M.~Czakon, P.~Fiedler and A.~Mitov,
+  %``Resolving the Tevatron Top Quark Forward-Backward Asymmetry Puzzle: Fully Differential Next-to-Next-to-Leading-Order Calculation,''
+  Phys.\ Rev.\ Lett.\  {\bf 115}, no. 5, 052001 (2015)
+  doi:10.1103/PhysRevLett.115.052001
+  [arXiv:1411.3007 [hep-ph]].
+  %%CITATION = doi:10.1103/PhysRevLett.115.052001;%%
+  %120 citations counted in INSPIRE as of 27 Oct 2017
+
+
+
+
+\end{thebibliography}
+
+
+
+\clearpage
+
+%Appendices
+\appendix
+\appendixpage
+\addappheadtotoc
+
+\section{Data Driven QCD Multijet Background}\label{sec:data driven qcd}
+
+QCD Multijet process has enormous total cross sections and extremely low selection efficiency in our analysis. As a result, we cannot rely on MC simulated events to produce background templates for this process. Instead, we use a data driven approach by selecting the Data events that are in the side-band region of the phase space. The side band region is defined by inverting the selection criterion for electrons, including both RelIso and electron ID. Therefore the side band region is completely orthogonal to signal region, and suppose to be mostly dominated by QCD Multijet events. 
+
+There are still contamination of other background events and signal events in side band region. We take the Data events in sideband region with events from other processes subtracted. The rest of events are assumed to be entirely consist of QCD multijet process. We assume the shape of kinematic distributions of QCD events in sideband region to be the same as that in signal region, but with different normalization due to very different selection efficiency. 
+
+In order to estimate the normalization of QCD events in signal region based on the total number of events in sideband region, we follow the ABCD method. This method involves define more side band regions that are correlated in the same fashions as the signal region and sideband region defined above. 
+
+Our choice of selection criteria for ABCD(EF) regions are defined in Fig.[\ref{fig:ABCD-def}].  Control plots are shown in Fig.[\ref{fig:ABCD-MET}]. Based on ABCD method, we compute conversion factor as defined in Table.[\ref{tab:ABCD - QCD numbers}], and apply the conversion factor to get an estimate of number of events for QCD Multijet process in signal region. Note that in order to calculate conversion factors, the expected number of "background" contaminated events are subtracted from number of data events in each region. 
+
+Based on the conversion factor calculated from ABCD method, and the number of observed events in C region, we expect 547 events from QCD multijet process, and we assigned a conservative uncertainty of 20\% in the nuisance parameter $R_{QCD}$ in our template fit. 
+
+The data events in region C ( with contamination removed ) are then reconstructed as $t\bar{t}$ final states, and become the QCD template in $e+jets$ channel. Since the template fit method depends mostly on the difference in distribution of signal and background processes, the expected QCD event rate is not very crucial, as we choose to determine the proper event rate in template fit. So the number of QCD events we estimated in this section is merely a reasonable initial value for the template fit. 
+
+ \begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.8\linewidth]{appendix/ABCD_region_def}
+  \caption{\small The selection criterion for different regions of side-band and signal region.}
+    \label{fig:ABCD-def}
+  \end{center}
+\end{figure}
+
+ \begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=1.0\linewidth]{appendix/ABCD_control_plots}
+  \caption{\small The missing transverse energy for $e+jets$ events in ABCD(EF) regions. The MC events are in solid color, and data events are in solid dots with error bars. The number of data events in each region is labeled as number of entries in upper right corner of each individual figure. }
+    \label{fig:ABCD-MET}
+  \end{center}
+\end{figure}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{c|cc|cccc}
+Method & predicted QCD events  &  $\sigma_{N_{QCD}}$ & $R_{QCD}$ & $\sigma_{R_{QCD}}$ \\
+\hline
+$N_{QCD}$ in D = B/A*C      &  547 &   52 &          1.3\% &         0.12\%  \\
+$N_{QCD}$ in D = F/E*C      &  435 &   129 &          0.98\% &         0.293\%  \\
+\hline
+\end{tabular}
+\caption{Expected number of QCD events in signal region based on the observed data events in side band C region and the conversion factor calculated from A/B and/or E/F regions.}
+\label{tab:ABCD - QCD numbers}
+\end{table}
+
+\clearpage
+\section{Removing Top $p_{T}$ Reweighting}
+\label{sec:top pt removal}
+
+As discussed above in Section~\ref{sec:corrections}, the semileptonic and dileptonic $t\bar{t}$ samples have been reweighted to conform more closely to the exected NNLO cross section, which seems to model the distribution of individual low $p_{T}$ top-quarks in data more accurately. As a consistency check, fits to the data were also performed with this $p_{T}$ dependent event scale factor removed. Numerical results are listed below in Table~\ref{appendix:top-pt}, and a visual comparison of these fits to data are pictured in Fig.~\ref{appendix: top pt postfit}.
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{c|cc|cccc}
+Template version & $A_{FB}$ &   $R_{q\bar{q}}$ & $R_{other\_bkg\_\mu}$ & $R_{other\_bkg\_el}$ & $R_{WJets\_\mu}$ & $R_{WJets\_el}$ \\
+\hline
+Apply top $p_T$         &  0.047 &   0.12 &          0.089 &          0.101 &      0.007 &      0.011 \\
+Not apply   top $p_T$   &  0.038 &  0.108 &          0.073 &          0.083 &      0.006 &       0.01 \\
+\hline
+\end{tabular}
+\caption{Central value of all fit parameters with each type of systematic nuisance parameters turn on at a time.}
+\label{appendix:top-pt}
+\end{table}
+
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{appendix/no_toppt/lep_combo_x}
+    \includegraphics[width=0.49\linewidth]{appendix/no_toppt/lep_combo_y}
+    \includegraphics[width=0.49\linewidth]{appendix/no_toppt/lep_combo_z}
+  \caption{\small Postfit plots of lepton and charge combined template after the fit (colored) and data (solid dots with error bar). Note top $p_T$ reweighting is not applied on $t\bar{t}$ MC samples. All errors, including the shaded band in the Data/MC comparison plots, indicate Poisson error only.}
+    \label{appendix: top pt postfit}
+  \end{center}
+\end{figure}
+
+
+
+Including the top $p_{T}$ reweighting significantly reduces the disparity between simulation and data at high $|cos(\theta)|$. However, it also causes greater disagreement in the $M_{t\bar{t}}$ spectrum, particularly by overestimating the portion of the data at low pair mass. Numerically, the fitted value of the background fraction is decreased when including the reweighting. The fitted value of $R_{q\bar q}$ is increased when including the reweighting. There is only small effect on the fitted value of $A^{(1)}_{FB}$, possibly correlated with the effect on $R_{q\bar q}$.
+
+\clearpage
+\section{Study the effect of gluon longitudinal polarization}
+In the earlier stage of the analysis, we made the asymmetric template $F_{qa}$ by using the gluon longitudinal polarization ($\alpha$) that is determined from a un-binned likelihood fit to the simulated $q\bar{q}\rightarrow t\bar{t}$ events generated using Powheg generator. The center of mass energy for the simulated events were chosen to be 8 TeV. We fit a $\alpha$ that is not a function of $\beta$ which depends on $t\bar{t}$ invariant mass.
+
+This is different from the $\alpha$ we use in the current version of results, which is determined from a binned likelihood fit to $c*$ distribution of simulated $q\bar{q}\rightarrow t\bar{t}$ process generated using aMC@NLO generator, and the proton-proton center of mass energy to be 13 TeV. In addition, we now fit the $\alpha$ as a $\beta$ dependent parameter, by fitting $c*$ distribution of different $\beta$ values.
+
+Here we list the measurement of $A_{FB}$ and other parameters using the old version of templates, generated with $\alpha=-0.13$, for the purpose of study how sensitive the fit result depends on $\alpha$.
+
+The systematic uncertainties are listed in Table.[\ref{tab:sys-full-old-alpha}]. The postfit comparison plots are show in Fig.[\ref{fig:postfit combined old alpha}] .  The fit results are:
+\begin{itemize}
+\item $ A_{FB} = 0.047  \pm 0.050 \, (stat) \pm 0.016 \, (sys)$
+\item $ R_{q\bar{q}} = 0.120  \pm 0.006 \, (stat) \pm 0.014 \, (sys) $
+\end{itemize}
+
+It can be seen that the difference of central values from the results of new versions of $\alpha$ is much smaller than the uncertainties. The conclusion is our fitting is ultimately not sensitive to the value of $\alpha$.
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{c|cc|cccc}
+Systematics &      $A_{FB}$ &   $R_{q\bar{q}}$ & $R_{other\_bkg\_\mu}$ & $R_{other\_bkg\_el}$ & $R_{WJets\_\mu}$ & $R_{WJets\_el}$ \\
+\hline
+Nominal         &  0.047 &   0.12 &          0.089 &          0.101 &      0.007 &      0.011 \\
+\hline
+B-Tagging Eff.  &  0.046 &  0.119 &          0.089 &          0.101 &      0.007 &      0.011 \\
+Lepton ID Eff.  &  0.047 &   0.12 &          0.088 &          0.101 &      0.007 &      0.011 \\
+Lepton Iso Eff. &  0.047 &   0.12 &          0.089 &          0.101 &      0.007 &      0.011 \\
+Tracking Eff.   &  0.047 &   0.12 &          0.089 &          0.101 &      0.007 &      0.011 \\
+Trigger Eff.    &  0.047 &   0.12 &          0.089 &          0.101 &      0.007 &      0.011 \\
+\hline
+JES             &   0.05 &  0.114 &          0.106 &           0.12 &      0.011 &      0.014 \\
+JER             &  0.041 &  0.118 &          0.095 &          0.104 &      0.008 &      0.011 \\
+PDF             &  0.038 &   0.12 &          0.095 &          0.104 &      0.008 &      0.011 \\
+\hline
+top $p\_T$         &  0.038 &  0.108 &          0.073 &          0.083 &      0.006 &       0.01 \\
+\hline
+\end{tabular}
+\caption{Central value of all fit parameters with each type of systematic nuisance parameters turn on at a time. Fit with templates generated using $\alpha=-0.13$}
+\label{tab:sys-full-old-alpha}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{c|cc|cccc}
+Systematics &    $\sigma_{AFB}^{sys}$ & $\sigma_{R_{q\bar{q}}}^{sys}$ & $\sigma_{R_{other\_bkg\_\mu}}^{sys}$ & $\sigma_{R_{other\_bkg\_el}}^{sys}$ & $\sigma_{R_{WJets\_\mu}}^{sys}$ & $\sigma_{R_{WJets\_el}}^{sys}$  \\
+\hline
+B-Tagging Eff.  &   0.001 &    0.001 &                  0 &                  0 &              0 &              0 \\
+Lepton ID Eff.  &       0 &        0 &              0.001 &                  0 &              0 &              0 \\
+Lepton Iso Eff. &       0 &        0 &                  0 &                  0 &              0 &              0 \\
+Tracking Eff.   &       0 &        0 &                  0 &                  0 &              0 &              0 \\
+Trigger Eff.    &       0 &        0 &                  0 &                  0 &              0 &              0 \\
+JES             &   0.003 &    0.006 &              0.017 &              0.019 &          0.004 &          0.003 \\
+JER             &   0.006 &    0.002 &              0.006 &              0.003 &          0.001 &              0 \\
+PDF             &   0.009 &        0 &              0.006 &              0.003 &          0.001 &              0 \\
+top $p\_T$         &   0.009 &    0.012 &              0.016 &              0.018 &          0.001 &          0.001 \\
+\hline
+Total           &  0.0144 &   0.0136 &             0.0249 &             0.0265 &        0.00436 &        0.00316 \\
+\hline
+\end{tabular}
+\caption{Systematic uncertainties of fit parameters from different sources. The total is the individual sources add in quadrature. Fit with templates generated using $\alpha=-0.13$ }
+\label{tab:sys-err-old-alpha}
+\end{table}
+
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{appendix/lep_combo_x}
+    \includegraphics[width=0.49\linewidth]{appendix/lep_combo_y}
+    \includegraphics[width=0.49\linewidth]{appendix/lep_combo_z}
+  \caption{\small Postfit plots of lepton and charge combined template after the fit (colored) and data (solid dots with error bar). All errors, including the shaded band in the Data/MC comparison plots, indicate Poisson error only. Fit with templates generated using $\alpha=-0.13$}
+    \label{fig:postfit combined old alpha}
+  \end{center}
+\end{figure}
+
+\clearpage
+\section{Lepton separate fit}
+\label{lep seperate fit}
+
+We also performed the $e+jets$ and $\mu+jets$ channel separately as a cross check. The results are shown in Table.[\ref{tab:result_mu}] and Table.[\ref{tab:result_el}]. If compare with lepton combined fit result, it can be seen that the combine fit result roughly lies in between the results of $e+jets$ and $\mu+jets$. 
+
+\begin{table}[hbt]
+\begin{center}
+\begin{tabular}{c|cc}\hline
+Parameter                   & Fit   \\
+\hline
+$A_{FB}$					   &  0.146 $\pm$ 0.077(stat)  \\
+$R_{q\bar{q}}$			  &  0.102 $\pm$ 0.008(stat)  \\
+\end{tabular}
+\end{center}
+\label{tab:result_mu}
+\caption{Result of template fit to single muon data using 2012 8 TeV Data collected by CMS.  The expected value of parameters are from template fit to MC simulations. }
+\end{table}
+
+\begin{table}[hbt]
+\begin{center}
+\begin{tabular}{c|cc}\hline
+Parameter                   & Fit   \\
+\hline
+$A_{FB}$						& -0.091  $\pm$ 0.076 (stat) \\
+$R_{q\bar{q}}$ & 0.137 $\pm$ 0.008   \\
+\end{tabular}
+\end{center}
+\label{tab:result_el}
+\caption{Result of template fit to single electron data using 2012 8 TeV Data collected by CMS. The expected value of parameters are from template fit to MC simulations. }
+\end{table}
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{mu/comb_x}
+    \includegraphics[width=0.49\linewidth]{mu/comb_y}
+    \includegraphics[width=0.49\linewidth]{mu/comb_z}
+  \caption{\small Postfit plots for $\mu$+jets channel.}
+    \label{fig:mu_postfit}
+  \end{center}
+\end{figure}
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{el/comb_x}
+    \includegraphics[width=0.49\linewidth]{el/comb_y}
+    \includegraphics[width=0.49\linewidth]{el/comb_z}
+  \caption{\small Postfit plots for e+jets channel.}
+    \label{fig:el_postfit}
+  \end{center}
+\end{figure}
+
+
+
+\clearpage
+\section{Generalization of Analysis Scheme}
+A more sophisticated model can be proposed to empirically describe the distribution of our signal process, though in current form we use the simplified model which is by setting $\xi,\delta$ to zero.
+
+\begin{align}
+\frac{d\sigma}{dc_*}(q\bar q;M^2) = R\frac{\pi\alpha_s^2}{9M^2}\beta\biggl\lbrace&1+\beta^2c_*^2+\left(1+\xi\right)\left(1-\beta^2\right)+\left(\alpha+\delta\right)\left(1-\beta^2c_*^2\right) \nonumber \\
+&+2\left[1+\frac{1}{3}\beta^2+(1+\xi)(1-\beta^2)+\left(\alpha+\delta\right)\left(1-\frac{1}{3}\beta^2\right)\right]A_\mathrm{FB}^{(1)}c_*\biggr\rbrace
+\label{eq:qq_general}
+\end{align}
+
+This general form of distribution can be used to generate templates for a 5-parameter fit that allows the fitting of a non-zero $\xi,\delta$.  This requires that the function be decomposed into six parts that are linear in the fit parameters or products of fit parameters.  The same template functions $f_\mathrm{qs}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q)$ and $f_\mathrm{qa}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q)$ are used in combination with new templates $f_{\mathrm{qs}\xi}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q)$, $f_{\mathrm{qa}\xi}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q)$, $f_{\mathrm{qs}\delta}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q)$, and $f_{\mathrm{qa}\delta}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q)$ generated from samples with the weights,
+\begin{align}
+w_{\mathrm{s}\xi}(M^2, c_*) &= \frac{1-\beta^2}{1+\beta^2c_*^2+\left(1-\beta^2\right)+\alpha\left(1-\beta^2c_*^2\right)} \\
+w_{\mathrm{a}\xi}(M^2, c_*) &= 2\frac{1-\beta^2}{1+\beta^2c_*^2+\left(1-\beta^2\right)+\alpha\left(1-\beta^2c_*^2\right)}c_*\\
+w_{\mathrm{s}\delta}(M^2, c_*) &= \frac{1-\beta^2c_*^2}{1+\beta^2c_*^2+\left(1-\beta^2\right)+\alpha\left(1-\beta^2c_*^2\right)} \\
+w_{\mathrm{a}\delta}(M^2, c_*) &= 2\frac{1-\frac{1}{3}\beta^2}{1+\beta^2c_*^2+\left(1-\beta^2\right)+\alpha\left(1-\beta^2c_*^2\right)}c_*.
+\end{align}
+The 5-parameter likelihood fit would then look like the following,
+\begin{align}
+f(x_\mathrm{r},&M_\mathrm{r},c_\mathrm{r},Q) =  \sum_jR^j_\mathrm{bk}f^j_\mathrm{bk}(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r})+\biggl(1-\sum_jR^j_\mathrm{bk}\biggr )\biggl[ \left(1-R_{q\bar q}\right) f_{gg}(x_\mathrm{r},M_\mathrm{r},c_\mathrm{r},Q)\nonumber \\  \nonumber
+&+\frac{R_{q\bar q}}{1+\xi F_{\xi}+\delta F_{\delta}}\Bigl\lbrace f_\mathrm{qs}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q)+\xi f_{\mathrm{qs}\xi}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q)+\delta f_{\mathrm{qs}\delta}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q) \\
+&+A_\mathrm{FB}^{(1)}\bigl[f_\mathrm{qa}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q)+\xi f_{\mathrm{qa}\xi}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q)+\delta f_{\mathrm{qa}\delta}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q)\bigr]\Bigr\rbrace\biggr]   \label{eq:sixparone}
+\end{align}
+where the symmetric distribution functions are normalized as follows,
+\begin{align}
+ & \sum_{Q}\int dx_\mathrm{r} dM_\mathrm{r} dc_\mathrm{r} f_{\mathrm{bk}}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q) = 1\\
+ & \sum_{Q}\int dx_\mathrm{r} dM_\mathrm{r} dc_\mathrm{r} f_{gg}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q) = 1\\
+  & \sum_{Q}\int dx_\mathrm{r} dM_\mathrm{r} dc_\mathrm{r} f_{\mathrm{qs}}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q) = 1
+ \end{align}
+
+and where $F_\xi$ and $F_\delta$ are the integrals of the reweighted symmetric functions $f_{\mathrm{qs}\xi}$ and $f_{\mathrm{qs}\delta}$,
+\begin{align}
+ F_{\xi}=& \sum_{Q}\int dx_\mathrm{r} dM_\mathrm{r} dc_\mathrm{r} f_{\mathrm{qs}\xi}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q) \\
+  F_{\delta}=& \sum_{Q}\int dx_\mathrm{r} dM_\mathrm{r} dc_\mathrm{r} f_{\mathrm{qs}\delta}(x_\mathrm{r}, M_\mathrm{r}, c_\mathrm{r},Q).
+ \end{align}
+
+It is expected that spin correlations cause the acceptances for $q\bar q$-produced and $gg$-produced events to differ.  The $gg$-produced events are expected to have a negative spin-correlation: the number of $t_L\bar t_L+t_R\bar t_R$ events is expected to be larger than the number of $t_L\bar t_R+t_R\bar t_L$ events where the labels refer to helicity and not chirality.  The $q\bar q$-produced events have a positive spin-correlation with more of the latter and fewer of the former.  Since the acceptance of the detector differs for left-handed top (right-handed antitop) and right-handed (left-handed antitop) decays, the acceptances for the two subsamples must differ.  These differences are included in the simulated samples and the re-weighting of the $q\bar q$ sample to create a generalized distribution function implicitly assumes that the $q\bar q$ QCD spin correlation is not affected by the presence of any new physics.
+
+
+\clearpage
+
+\section{Templates}
+\label{sec:all templates}
+In this section we included all major templates that has been fed into Theta for template fit. We organize the plots in terms of the corresponding parameter the templates are for. Note that for the parameters that only affect the event rate , such as $R_{q\bar q}$, only $c*$ projection plots are shown to reduce redundancy.
+ 
+\subsection{$A_{FB}$ templates}
+$A_{FB}$ only affect the $q\bar q \rightarrow t \bar t$ distributions, for both $e+jets$ and $\mu+jets$ channel. The plots are shown in Fig.[\ref{appendix:afb_temps}]
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__qq__AFB__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__qq__AFB__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__qq__AFB__mtt_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__qq__AFB__mtt_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__qq__AFB__xf_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__qq__AFB__xf_sys}
+  \caption{\small Template projections for $q\bar q \rightarrow t\bar t$ templates, with up/down/nominal values of $A_{FB}$, for $e+jets$ (left) and $\mu+jets$ (right) channels. }
+  \label{appendix:afb_temps}
+  \end{center}
+\end{figure}
+ 
+\subsection{$R_{q\bar q}$ templates}
+$R_{q\bar q}$ affect both $q\bar q$ ang $gg/qg$ initiated $t\bar t$ templates. It affect the event rate only, not the shape of the templates. The up/down versions of the templates represent the event rate of $q\bar q$ process be 0.2 and 1.8 times the nominal value. The $c*$ projections are in Fig.[\ref{appendix:Rqq_temps}]
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__qq__R_qq__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__qq__R_qq__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__gg__R_qq__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__gg__R_qq__cstar_sys}
+  \caption{\small $c*$ projections for $q\bar q \rightarrow t\bar t$ (top) and $gg/qg \rightarrow t\bar t$ templates, with up/down/nominal values of $R_{q\bar q}$, for $e+jets$ (left) and $\mu+jets$ (right) channels. }
+  \label{appendix:Rqq_temps}
+  \end{center}
+\end{figure}
+ 
+\subsection{ $R_{other\_bkg\_e}$ and $R_{other\_bkg\_\mu}$ templates }
+According to our statistical model Eq.[\ref{eq:template_schemeone}] and Eq.[\ref{eq:SF_bkg}], $R_{other\_bkg\_el}$ only affect $other\_bkg$, $q\bar q$ and $gg$ templates in $e+jets$ channel. It will not affect any templates in $\mu+jets$ channel. Similarly, $R_{other\_bkg\_\mu}$ only affect the corresponding templates in $\mu+jets$ channel. We include the templates for $R_{other\_bkg\_el}$ in Fig.[\ref{appendix:R_other_bkg temp e+jets}] and $R_{other\_bkg\_\mu}$ in Fig.[\ref{appendix:R_other_bkg temp mu+jets}]
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__other_bkg__R_other_bkg_el__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__qq__R_other_bkg_el__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__gg__R_other_bkg_el__cstar_sys}
+  \caption{\small $c*$ projections for $other\_bkg$,  $q\bar q \rightarrow t\bar t$ (top) and $gg/qg \rightarrow t\bar t$ templates for $e+jets$ channel, with up/down/nominal values of $R_{other\_bkg\_e}$.}
+  \label{appendix:R_other_bkg temp e+jets}
+  \end{center}
+\end{figure}
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__other_bkg__R_other_bkg_mu__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__qq__R_other_bkg_mu__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__gg__R_other_bkg_mu__cstar_sys}
+  \caption{\small $c*$ projections for $other\_bkg$,  $q\bar q \rightarrow t\bar t$ (top) and $gg/qg \rightarrow t\bar t$ templates for $\mu+jets$ channel, with up/down/nominal values of $R_{other\_bkg\_\mu}$.}
+  \label{appendix:R_other_bkg temp mu+jets}
+  \end{center}
+\end{figure}
+
+\subsection{$R_{WJets\_e}$ and $R_{WJets\_\mu}$ templates}
+This parameter is similar to $R_{other\_bkg\_e}$, which has un-correlated effect on $e+jets$ and $\mu+jets channels$. The $c*$ projections for both channels are shown in Fig.[\ref{appendix:R_WJets temp e+jets}] and Fig.[\ref{appendix:R_WJets temp mu+jets}] 
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__WJets__R_WJets_el__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__qq__R_WJets_el__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__gg__R_WJets_el__cstar_sys}
+  \caption{\small $c*$ projections for $W+Jets$,  $q\bar q \rightarrow t\bar t$ (top) and $gg/qg \rightarrow t\bar t$ templates for $e+jets$ channel, with up/down/nominal values of $R_{WJets\_e}$.}
+  \label{appendix:R_WJets temp e+jets}
+  \end{center}
+\end{figure}
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__WJets__R_WJets_mu__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__qq__R_WJets_mu__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__gg__R_WJets_mu__cstar_sys}
+  \caption{\small $c*$ projections for $W+Jets$,  $q\bar q \rightarrow t\bar t$ (top) and $gg/qg \rightarrow t\bar t$ templates for $\mu+jets$ channel, with up/down/nominal values of $R_{WJets\_\mu}$.}
+  \label{appendix:R_WJets temp mu+jets}
+  \end{center}
+\end{figure}
+
+\subsection{Jet Energy Resolution/ Jet Energy Scale Templates}
+Jet energy resolution and jet energy scale nuisance parameter will affect the distribution of all processes. For simplicity, we only show the $q\bar q$ and $gg/qg$ templates for different variations of JEC/JER parameters, corresponding to 1 $\sigma$ of variations.
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__qq__JER__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__qq__JER__cstar_sys}    
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__qq__JER__mtt_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__qq__JER__mtt_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__qq__JER__xf_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__qq__JER__xf_sys}
+  \caption{\small Projections for $q\bar q \rightarrow t\bar t$ templates for $e+jets$ channel (left) and $\mu+jets$ channel, with up/down/nominal variations of jet energy resolution corrections.}
+  \label{appendix:JER qq temp}
+  \end{center}
+\end{figure}
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__gg__JER__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__gg__JER__cstar_sys}    
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__gg__JER__mtt_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__gg__JER__mtt_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__gg__JER__xf_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__gg__JER__xf_sys}
+  \caption{\small Projections for $gg/qg \rightarrow t\bar t$ templates for $e+jets$ channel (left) and $\mu+jets$ channel, with up/down/nominal variations of jet energy resolution corrections.}
+  \label{appendix:JER gg temp}
+  \end{center}
+\end{figure}
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__qq__JES__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__qq__JES__cstar_sys}    
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__qq__JES__mtt_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__qq__JES__mtt_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__qq__JES__xf_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__qq__JES__xf_sys}
+  \caption{\small Projections for $q\bar q \rightarrow t\bar t$  templates for $e+jets$ channel (left) and $\mu+jets$ channel, with up/down/nominal variations of jet energy scale corrections.}
+  \label{appendix:JES qq temp}
+  \end{center}
+\end{figure}
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__gg__JES__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__gg__JES__cstar_sys}    
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__gg__JES__mtt_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__gg__JES__mtt_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__gg__JES__xf_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__gg__JES__xf_sys}
+  \caption{\small Projections for $gg/qg \rightarrow t\bar t$ templates for $e+jets$ channel (left) and $\mu+jets$ channel, with up/down/nominal variations of jet energy scale corrections.}
+  \label{appendix:JES gg temp}
+  \end{center}
+\end{figure}
+
+\subsection{Parton Distribution Function Templates}
+PDF  nuisance parameter will affect the distribution of all processes. For simplicity, we only show the $q\bar q$ and $gg/qg$ templates for different variations of PDF, corresponding to 1 $\sigma$ of variations.
+ 	
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__qq__Pdf_weights__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__qq__Pdf_weights__cstar_sys}    
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__qq__Pdf_weights__mtt_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__qq__Pdf_weights__mtt_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__qq__Pdf_weights__xf_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__qq__Pdf_weights__xf_sys}
+  \caption{\small Projections for $q\bar q \rightarrow t\bar t$ templates for $e+jets$ channel (left) and $\mu+jets$ channel, with up/down/nominal variations of PDF.}
+  \label{appendix:PDF temp qq}
+  \end{center}
+\end{figure}
+
+\begin{figure}[hbt]
+  \begin{center}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__gg__Pdf_weights__cstar_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__gg__Pdf_weights__cstar_sys}    
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__gg__Pdf_weights__mtt_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__gg__Pdf_weights__mtt_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/el_f_combo__gg__Pdf_weights__xf_sys}
+    \includegraphics[width=0.49\linewidth]{appendix/templates/mu_f_combo__gg__Pdf_weights__xf_sys}
+  \caption{\small Projections for $q\bar q \rightarrow t\bar t$ templates for $e+jets$ channel (left) and $\mu+jets$ channel, with up/down/nominal variations of PDF.}
+  \label{appendix:PDF temp gg}
+  \end{center}
+\end{figure}
+
+
+
+\end{document}
+
